@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Home, Trophy, Users } from 'lucide-react';
+import { Home, Search, Trophy, Users } from 'lucide-react';
 
 const NavBar = () => {
   return (
@@ -17,6 +17,11 @@ const NavBar = () => {
       <Link to="/players" className="flex items-center gap-2 text-white">
         <Users size={15} />
         <span className="text-md">Players</span>
+      </Link>
+
+      <Link to="/scouting" className="flex items-center gap-2 text-white">
+        <Search size={15} />
+        <span className="text-md">Scouting</span>
       </Link>
     </nav>
   );

@@ -4,6 +4,7 @@ import Loader from '@/ui/Loader';
 import { usePlayerSearch } from '../hooks/usePlayerSearch';
 import Pagination from '@/ui/Pagination';
 import PlayerSearchInput from '../components/PlayerSearchInput';
+import { getPlayerCountText } from '@/utils';
 
 const PlayerSearchPage: React.FC = () => {
   const { players, totalElements, totalPages, loading, error, query, setQuery, currentPage, setCurrentPage } = usePlayerSearch();
@@ -11,16 +12,6 @@ const PlayerSearchPage: React.FC = () => {
   
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-  };
-
-  const getPlayerCountText = () => {
-    if (totalElements === 0) {
-      return "No Players found";
-    } else if (totalElements === 1) {
-      return "1 Player found";
-    } else {
-      return `${totalElements} Players found`;
-    }
   };
 
   if (error) {
@@ -47,7 +38,7 @@ const PlayerSearchPage: React.FC = () => {
       ) : (
           <Card>
             <CardHeader>
-              <h2>{getPlayerCountText()}</h2>
+              <h2>{getPlayerCountText(totalElements)}</h2>
               
               {showPagination && <Pagination 
                 currentPage={currentPage}

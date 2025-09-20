@@ -7,6 +7,7 @@ import NavBar from './ui/NavBar'
 import PlayerSearchPage from './player/pages/PlayerSearchPage'
 import SimulationPage from './simulation/pages/SimulationPage'
 import OverviewPage from './overview/pages/OverviewPage'
+import ScoutingPage from './scouting/pages/ScoutingPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/players" element={<PlayerSearchPage />} />
           <Route path="/players/:id" element={<PlayerDetailPage />} />
           <Route path="/simulation/:id" element={<SimulationPage />} />
+          <Route path="/scouting" element={<ScoutingPage />} />
         </Routes>
       </BrowserRouter>
     </>

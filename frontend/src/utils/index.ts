@@ -1,3 +1,13 @@
+export const getPlayerCountText = (totalElements: number) => {
+  if (totalElements === 0) {
+    return "No Players found";
+  } else if (totalElements === 1) {
+    return "1 Player found";
+  } else {
+    return `${totalElements} Players found`;
+  }
+};
+
 export const formatMarketValue = (value: number): string => {
     if (value >= 1000) {
         return `€${(value / 1000).toFixed(1)}B`;
