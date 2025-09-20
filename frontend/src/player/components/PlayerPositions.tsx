@@ -1,5 +1,6 @@
 import React from 'react';
 import OverallRating from '../../ui/OverallRating';
+import fieldImage from '../../assets/field.png';
 import './PlayerPositions.scss';
 
 interface PlayerPositionsProps {
@@ -25,8 +26,6 @@ const positionCoordinates: { [key: string]: { top: string; left: string } } = {
 };
 
 const PlayerPositions: React.FC<PlayerPositionsProps> = ({ positions }) => {
-  const fieldImage = '/src/assets/field.png'; 
-
   return (
     <div
       className="fieldContainer"
