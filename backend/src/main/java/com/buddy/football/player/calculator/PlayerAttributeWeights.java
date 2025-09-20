@@ -40,9 +40,9 @@ public class PlayerAttributeWeights {
     );
 
     private static final Map<String, Double> PHYSICAL = Map.of(
-            "strength", 0.40,
-            "stamina", 0.30,
-            "jumping", 0.20,
+            "strength", 0.50,
+            "jumping", 0.25,
+            "stamina", 0.15,
             "aggression", 0.10
     );
 
