@@ -14,14 +14,18 @@ class PlayerAttributeCalculatorTest {
     void testExtractAttributes() {
         PlayerAttributeValues mockValues = Mockito.mock(PlayerAttributeValues.class);
         PlayerAttributeCalculator calc = new PlayerAttributeCalculator(mockValues);
+
         PlayerAttributes attrs = new PlayerAttributes();
 
-        Mockito.when(mockValues.getAttributeValue(Mockito.any(), Mockito.anyString())).thenReturn(1);
+        Mockito.when(mockValues.getAttributeValue(Mockito.any(PlayerAttributes.class), Mockito.anyString()))
+                .thenReturn(10);
 
         Map<String, Integer> result = calc.extractAttributes(attrs);
 
         assertEquals(7, result.size());
+
         result.values().forEach(value -> assertTrue(value > 0));
+        result.values().forEach(value -> assertEquals(10, value));
     }
 
     @Test

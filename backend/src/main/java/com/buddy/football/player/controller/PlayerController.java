@@ -82,13 +82,13 @@ public class PlayerController {
         return ResponseEntity.ok(similarPlayersDTOs);
     }
 
-    @GetMapping("/filter")
-    public List<PlayerDetailDTO> filterPlayers(
+    @GetMapping("/scouting")
+    public List<PlayerListDTO> scoutingPlayers(
             @RequestParam double marketValueMax,
             @RequestParam String position,
             @RequestParam int minValue) {
 
-        return playerService.filterPlayers(marketValueMax, position, minValue);
+        return playerService.playerScouting(marketValueMax, position, minValue);
     }
 
     @GetMapping("/compare")

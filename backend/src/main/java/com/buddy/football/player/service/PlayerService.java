@@ -1,32 +1,39 @@
 package com.buddy.football.player.service;
 
-import com.buddy.football.player.dto.PlayerDetailDTO;
+import com.buddy.football.player.dto.PlayerListDTO;
+import com.buddy.football.player.dto.PlayerMapper;
 import com.buddy.football.player.entity.Player;
 import com.buddy.football.player.repository.PlayerRepository;
+import com.buddy.football.player.repository.PlayerSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PlayerService {
 
+    private static final Set<String> VALID_POSITIONS = Set.of(
+            "st", "lw", "rw", "cam", "cm", "cdm", "rm", "lm", "cb", "lb", "rb", "gk"
+    );
+
     private final PlayerRepository playerRepository;
+    private final PlayerMapper playerMapper;
+    private static final int MAX_RESULTS = 15;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static final Set<String> VALID_POSITIONS = Set.of(
-            "lm", "rw", "rm", "lw", "rb", "lb", "cm", "cb", "cdm", "cam", "st", "gk"
-    );
-
-    public PlayerService(PlayerRepository playerRepository, EntityManager entityManager) {
+    public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper, EntityManager entityManager) {
         this.playerRepository = playerRepository;
+        this.playerMapper = playerMapper;
         this.entityManager = entityManager;
     }
 
@@ -71,31 +78,22 @@ public class PlayerService {
         );
     }
 
-    public List<PlayerDetailDTO> filterPlayers(double marketValueMax, String position, int minValue) {
-        if (!VALID_POSITIONS.contains(position)) {
+    public List<PlayerListDTO> playerScouting(double marketValueMax, String position, int minValue) {
+        String validatedPosition = position.toLowerCase();
+
+        if (!VALID_POSITIONS.contains(validatedPosition)) {
             throw new IllegalArgumentException("Invalid position: " + position);
         }
 
-        String sql = """
-            SELECT p.id, p.last_name AS playerName, t.name AS teamName,
-                   p.is_starting AS isStarting, p.market_value AS marketValue, 
-                   p.main_positions AS mainPositions, p.overall_rating AS overallRating,
-                   pp.st, pp.cam, pp.cb, pp.cm, pp.rw, pp.rm, pp.lw, pp.lm, 
-                   pp.rb, pp.lb, pp.cdm, pp.gk
-            FROM player_positions pp
-            JOIN players p ON pp.player_id = p.id
-            JOIN teams t ON p.team_id = t.id
-            WHERE p.market_value <= :marketValueMax
-              AND p.is_starting = false
-              AND pp.%s >= :minValue
-            ORDER BY p.market_value DESC
-            """.formatted(position);
+        Specification<Player> spec = PlayerSpecification.filterPlayers(marketValueMax, validatedPosition, minValue);
 
-        Query query = entityManager.createNativeQuery(sql, "PlayerDetailMapping");
-        query.setParameter("marketValueMax", marketValueMax);
-        query.setParameter("minValue", minValue);
+        Pageable pageable = PageRequest.of(0, MAX_RESULTS);
 
-        return query.getResultList();
+        List<Player> players = playerRepository.findAll(spec, pageable).getContent();
+
+        return players.stream()
+                .map(playerMapper::toListDTO)
+                .collect(Collectors.toList());
     }
 
     public Player getPlayerById(UUID id) {
