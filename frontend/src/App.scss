@@ -40,6 +40,10 @@ a {
     text-decoration: none;
 }
 
+input, button {
+    border: 1px solid var(--grey-200);
+}
+
 .card {
     border: 1px solid;
     border-color: var(--grey-600);
@@ -73,6 +77,10 @@ h3 {
 
 .cursor {
     cursor: pointer;
+}
+
+.disabled {
+    cursor: not-allowed;
 }
 
 .text-left {

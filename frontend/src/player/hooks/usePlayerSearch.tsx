@@ -6,10 +6,13 @@ import { PlayerList } from '../types/PlayerList';
 interface PlayerSearchState {
   players: Player[];
   totalElements: number;
+  totalPages: number;
   loading: boolean;
   error: string | null;
   query: string;
   setQuery: (query: string) => void;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
 }
 
 export const usePlayerSearch = (): PlayerSearchState => {
@@ -17,8 +20,10 @@ export const usePlayerSearch = (): PlayerSearchState => {
   const [query, setQuery] = useState<string>('');
   const [debouncedQuery, setDebouncedQuery] = useState<string>('');
   const [totalElements, setTotalElements] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -36,13 +41,15 @@ export const usePlayerSearch = (): PlayerSearchState => {
       setError(null);
       
       try {
-        const data: PlayerList | null = await fetchPlayersByQuery(debouncedQuery);
+        const data: PlayerList | null = await fetchPlayersByQuery(debouncedQuery, currentPage);
         if (data) {
           setPlayers(data.content);
           setTotalElements(data.totalElements);
+          setTotalPages(data.totalPages);
         } else {
           setPlayers([]);
           setTotalElements(0);
+          setTotalPages(0);
         }
       } catch (err) {
         if (err instanceof Error) {
@@ -58,7 +65,7 @@ export const usePlayerSearch = (): PlayerSearchState => {
     if (debouncedQuery.length >= 3 || debouncedQuery.length === 0) {
       fetchPlayers();
     }
-  }, [debouncedQuery]);
+  }, [debouncedQuery, currentPage]);
 
-  return { players, totalElements, loading, error, query, setQuery };
+  return { players, totalElements, totalPages, loading, error, query, setQuery, currentPage, setCurrentPage };
 };

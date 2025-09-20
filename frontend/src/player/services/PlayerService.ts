@@ -12,8 +12,8 @@ export const fetchPlayerById = async (id: string): Promise<Player> => {
   return data;
 };
 
-export const fetchPlayersByQuery = async (query: string): Promise<PlayerList> => {
-  const endpoint = query ? `players?query=${query}` : 'players';
+export const fetchPlayersByQuery = async (query: string, page: number): Promise<PlayerList> => {
+  const endpoint = query ? `players?query=${query}&page=${page}` : `players?page=${page}`;
 
   const data = await apiClient.fetch<PlayerList>(endpoint);
   

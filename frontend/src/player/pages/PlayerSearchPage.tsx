@@ -3,13 +3,28 @@ import { Card, CardContent, CardHeader } from '@/ui/Card';
 import PlayerSearchResult from '../components/PlayerSearchResult';
 import Loader from '@/ui/Loader';
 import { usePlayerSearch } from '../hooks/usePlayerSearch';
+import Pagination from '@/ui/Pagination';
 
 const PlayerSearchPage: React.FC = () => {
-  const { players, totalElements, loading, error, query, setQuery } = usePlayerSearch();
+  const { players, totalElements, totalPages, loading, error, query, setQuery, currentPage, setCurrentPage } = usePlayerSearch();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const getPlayerCountText = () => {
+    if (totalElements === 0) {
+      return "No Players found";
+    } else if (totalElements === 1) {
+      return "1 Player found";
+    } else {
+      return `${totalElements} Players found`;
+    }
   };
 
   useEffect(() => {
@@ -41,14 +56,27 @@ const PlayerSearchPage: React.FC = () => {
         </CardContent>
       </Card>
 
-        {loading ? (
-          <Loader />
-        ) : (
-          <PlayerSearchResult
-              players={players}
-              totalElements={totalElements}
-          />
-        )}
+      {loading ? (
+        <Loader />
+      ) : (
+          <Card>
+            <CardHeader>
+              <h2>{getPlayerCountText()}</h2>
+              
+              <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </CardHeader>
+            
+            <CardContent className='m-y-4'>
+                <PlayerSearchResult
+                  players={players}
+                />
+            </CardContent>
+          </Card>
+      )}
     </>
   );
 };
