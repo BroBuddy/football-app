@@ -19,10 +19,6 @@ const PlayerSimilars: React.FC<PlayerSimilarsProps> = ({ players, loading, error
     return <div>Error: {error}</div>;
   }
 
-  if (players.length === 0) {
-    return <div>No similar players found.</div>;
-  }
-
   return (
     <Card>
       <CardHeader>
@@ -34,6 +30,8 @@ const PlayerSimilars: React.FC<PlayerSimilarsProps> = ({ players, loading, error
       </CardHeader>
 
       <CardContent className="m-y-4">
+        {players.length === 0 && <p className='text-sm text-grey-200'>No similar players found.</p>}
+
         {players.map((player) => (
           <PlayerSearchItem key={player.id} player={player} />
         ))}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Player } from '@/player/types/Player';
 import Image from '@/ui/Image';
 import { Link } from 'react-router-dom';
+import OverallRating from '@/ui/OverallRating';
 
 interface PlayerSearchItemProps {
   player: Player;
@@ -13,6 +14,7 @@ const PlayerSearchItem: React.FC<PlayerSearchItemProps> = ({ player }) => {
       <Link 
         to={`/players/${player.id}`} 
         className='flex items-center gap-3 p-r-8 cursor'>
+        <OverallRating rating={player.overallRating} />
         <Image src={player.nation.flagUrl} alt={player.nation.name} className="w-3" />
         
         <div className="text-sm text-white">

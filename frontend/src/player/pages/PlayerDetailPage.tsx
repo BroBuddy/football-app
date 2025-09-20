@@ -46,14 +46,15 @@ function PlayerDetailPage() {
 
             </CardContent>
         </Card>
-
-        <PlayerAttributes player={player} />
-
+        
           <PlayerSimilars
             players={similarPlayers} 
             loading={similarLoading} 
             error={similarError} 
         />
+
+        <PlayerAttributes player={player} />
+
     </>
   );
 }

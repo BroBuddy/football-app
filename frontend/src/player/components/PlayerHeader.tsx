@@ -16,16 +16,17 @@ const PlayerHeader: React.FC<PlayerHeaderProps> = ({ player }) => {
     <CardHeader>
       <div className="flex items-center justify-between">
         <div className='flex items-center'>
+          <OverallRating rating={player.overallRating} />
+
           <Image
             src={player.nation.flagUrl}
             alt={player.lastName}
-            className='w-3 m-r-2'
+            className='w-3 m-x-3'
           />
 
           <h2 className='m-r-2'>
             {player.firstName} {player.lastName}
           </h2>
-          <OverallRating rating={player.overallRating} />
         </div>
 
         <div className='flex items-center'>
