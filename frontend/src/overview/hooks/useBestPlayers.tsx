@@ -21,7 +21,8 @@ export const useBestPlayers = (): BestPlayersState => {
         setState({ data: null, loading: true, error: null });
         const bestPlayers = await fetchBestPlayersByAttribute();
         setState({ data: bestPlayers, loading: false, error: null });
-      } catch (err) {
+      } catch (error) {
+        console.log(error);
         setState({ data: null, loading: false, error: 'Failed to fetch best players.' });
       }
     };
