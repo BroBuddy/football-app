@@ -12,12 +12,17 @@ interface ScoutingFormProps {
     loading: boolean;
 }
 
-const maxMarketValues: number[] = Array.from({ length: (80 - 5) / 5 + 1 }, (_, i) => 80 - (i * 5));
-
 const positions: string[] = 
     ['st', 'lw', 'rw', 'cam', 'cm', 'cdm', 'rm', 'lm', 'cb', 'lb', 'rb', 'gk'];
 
 const minValues: number[] = Array.from({ length: (86 - 70) / 2 + 1 }, (_, i) => 86 - (i * 2));
+
+const maxMarketValues: number[] = [
+    ...Array.from({ length: 5 }, (_, i) => 180 - (i * 20)),
+    ...Array.from({ length: 5 }, (_, i) => 90 - (i * 10)),
+    ...Array.from({ length: 6 }, (_, i) => 45 - (i * 5)),
+    ...Array.from({ length: 9 }, (_, i) => 18 - (i * 2))
+];
 
 const ScoutingForm: React.FC<ScoutingFormProps> = ({ 
     marketValueMax, 
