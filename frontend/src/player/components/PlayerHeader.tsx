@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CardHeader } from '@/ui/Card';
 import Image from '@/ui/Image';
 import OverallRating from '@/ui/OverallRating';
-import { Calendar, PersonStanding } from 'lucide-react';
+import { Calendar, MapPin, PersonStanding } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
 import { Player } from '../types/Player';
@@ -64,6 +64,13 @@ const PlayerHeader: React.FC<PlayerHeaderProps> = ({ player }) => {
           <span className="text-sm">
             {formatMarketValue(player.marketValue)}
           </span>
+        </div>
+
+        <div className="flex items-center text-left w-10 text-grey-200">
+            <MapPin size={15} className="m-r-1" />
+            <span className='text-sm'>
+                {player.mainPositions.toLocaleUpperCase()}
+            </span>
         </div>
       </div>
     </CardHeader>

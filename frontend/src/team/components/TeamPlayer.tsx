@@ -35,6 +35,7 @@ const TeamPlayer: React.FC<TeamPlayerProps> = ({ player }) => {
                 {player.mainPositions.toLocaleUpperCase()}
             </span>
         </div>
+        
         <div className="flex items-center text-left w-10 text-grey-200">
             <Calendar size={15} className="m-r-1" />
             <span className='text-sm'>
