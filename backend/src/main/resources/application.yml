@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: football
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+
+cors:
+  allowed-origins:
+    - http://localhost:5173
+    - http://football-frontend.onrender.com
+
+  bootstrap:
+    nation:
+      enabled: true
+    team:
+      enabled: true
+    player:
+      enabled: true

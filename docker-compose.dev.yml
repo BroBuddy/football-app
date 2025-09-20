@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:15
+    container_name: football-db-dev
+    environment:
+      POSTGRES_USER: football_user
+      POSTGRES_PASSWORD: football_pw
+      POSTGRES_DB: football_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data-dev:/var/lib/postgresql/data
+    networks:
+      - football-net-dev
+
+  api:
+    build:
+      context: ./backend
+    container_name: football-api-dev
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/football_db
+      SPRING_DATASOURCE_USERNAME: football_user
+      SPRING_DATASOURCE_PASSWORD: football_pw
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    networks:
+      - football-net-dev
+
+volumes:
+  db-data-dev:
+
+networks:
+  football-net-dev:
+    driver: bridge

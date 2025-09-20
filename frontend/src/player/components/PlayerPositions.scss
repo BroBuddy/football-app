@@ -1,0 +1,26 @@
+.fieldContainer {
+  position: relative;
+  width: 315px;
+  height: 293px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.positionWrapper {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.positionLabel {
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 0.25rem;
+  border-radius: 0.125rem;
+  margin-bottom: 0.25rem; 
+}

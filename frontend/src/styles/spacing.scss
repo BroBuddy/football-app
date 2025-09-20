@@ -1,0 +1,129 @@
+$base-spacing: 0.25rem;
+
+$spacing-multipliers: (
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7,
+  8: 8,
+);
+
+.p {
+  @each $size-key, $multiplier in $spacing-multipliers {
+    &-#{$size-key} {
+      padding: map-get($spacing-multipliers, $size-key) * $base-spacing;
+    }
+  }
+
+  &-t {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-r {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-b {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-l {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-x {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-y {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        padding-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+}
+
+.m {
+  @each $size-key, $multiplier in $spacing-multipliers {
+    &-#{$size-key} {
+      margin: map-get($spacing-multipliers, $size-key) * $base-spacing;
+    }
+  }
+
+  &-t {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-r {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-b {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-l {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-x {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+
+  &-y {
+    @each $size-key, $multiplier in $spacing-multipliers {
+      &-#{$size-key} {
+        margin-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      }
+    }
+  }
+}

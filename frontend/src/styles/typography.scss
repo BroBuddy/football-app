@@ -1,0 +1,17 @@
+$base-font-size: 0.25em;
+
+$font-size-multipliers: (
+  xs: 2,
+  sm: 3,
+  md: 4,
+  lg: 5,
+  xl: 6,
+);
+
+.text {
+  @each $size-name, $multiplier in $font-size-multipliers {
+    &-#{$size-name} {
+      font-size: $base-font-size * $multiplier;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+$base-gap: 0.25rem;
+
+$gap-multipliers: (
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7,
+  8: 8,
+);
+
+.gap {
+  @each $size-key, $multiplier in $gap-multipliers {
+    &-#{$size-key} {
+      gap: $base-gap * $multiplier;
+    }
+  }
+
+  &-x {
+    @each $size-key, $multiplier in $gap-multipliers {
+      &-#{$size-key} {
+        column-gap: $base-gap * $multiplier;
+      }
+    }
+  }
+
+  &-y {
+    @each $size-key, $multiplier in $gap-multipliers {
+      &-#{$size-key} {
+        row-gap: $base-gap * $multiplier;
+      }
+    }
+  }
+}

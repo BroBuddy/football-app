@@ -1,0 +1,83 @@
+@import './styles/typography';
+@import './styles/spacing';
+@import './styles/utilities';
+@import './styles/flexbox';
+@import './styles/sizing';
+@import './styles/colors';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --black: #000;
+  --grey-900: #111;
+  --grey-800: #222;
+  --grey-700: #333;
+  --grey-600: #444;
+  --grey-500: #555;
+  --grey-400: #666;
+  --grey-300: #999;
+  --grey-200: #bbb;
+  --grey-100: #ddd;
+  --white: #fff;
+}
+
+#root {
+    font-family: 'Inter', sans-serif;
+    margin: 0 20px;
+    padding: 0;
+    position: relative;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+a {
+    text-decoration: none;
+}
+
+.card {
+    border: 1px solid;
+    border-color: var(--grey-600);
+    margin-bottom: 20px;
+    padding: 10px 25px;
+}
+
+.badge {
+  background-color: var(--grey-600);
+  padding: 3px 6px;
+}
+
+h1 {
+    font-size: 1.75em;
+    margin: 1em 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 0.75em 0;
+}
+
+h3 {
+    font-size: 1.25em;
+    margin: 0.5em 0;
+}
+
+.rounded {
+    border-radius: 8px;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
