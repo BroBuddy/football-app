@@ -28,6 +28,7 @@ export const usePlayerSearch = (): PlayerSearchState => {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
+      setCurrentPage(0);
     }, 500);
 
     return () => {
