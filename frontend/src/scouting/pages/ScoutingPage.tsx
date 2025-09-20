@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from '@/ui/Card';
 import ScoutingResult from '../components/ScoutingResult';
 import ScoutingForm from '../components/ScoutingForm';
 import { useScoutingPlayers } from '../hooks/useScoutingPlayers';
+import Loader from '@/ui/Loader';
 
 const ScoutingPage = () => {
     const [marketValueMax, setMarketValueMax] = useState<number>(25);
@@ -43,7 +44,9 @@ const ScoutingPage = () => {
                 </CardContent>
             </Card>
 
-            {searched && <ScoutingResult players={players} />}
+            {loading && <Loader />}
+
+            {!loading && searched && <ScoutingResult players={players} />}
         </>
     );
 };
