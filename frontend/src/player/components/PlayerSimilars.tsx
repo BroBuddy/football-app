@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader } from '@/ui/Card';
 import Loader from '@/ui/Loader';
-import { Users } from 'lucide-react';
 import { Player } from '../types/Player';
 import PlayerSearchItem from './PlayerSearchItem';
 
