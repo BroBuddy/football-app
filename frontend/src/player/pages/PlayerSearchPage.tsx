@@ -1,24 +1,14 @@
-import { useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader } from '@/ui/Card';
 import PlayerSearchResult from '../components/PlayerSearchResult';
 import Loader from '@/ui/Loader';
 import { usePlayerSearch } from '../hooks/usePlayerSearch';
 import Pagination from '@/ui/Pagination';
-import { Delete } from 'lucide-react';
+import PlayerSearchInput from '../components/PlayerSearchInput';
 
 const PlayerSearchPage: React.FC = () => {
   const { players, totalElements, totalPages, loading, error, query, setQuery, currentPage, setCurrentPage } = usePlayerSearch();
   const showPagination = totalElements > 20;
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
-
-  const handleClearInput = () => {
-    setQuery('');
-  };
-
+  
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -33,12 +23,6 @@ const PlayerSearchPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    if (!loading && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [loading]);
-
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -51,25 +35,10 @@ const PlayerSearchPage: React.FC = () => {
         </CardHeader>
 
         <CardContent className='m-y-4'>
-          <div className="flex items-center">
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search player..."
-              value={query}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded bg-black text-white"
-            />
-
-            {query && (
-              <span
-                onClick={handleClearInput}
-                className="bg-black m-l-2 text-white cursor"
-              >
-                <Delete size={20} />
-              </span>
-            )}
-          </div>
+          <PlayerSearchInput
+            query={query} 
+            setQuery={setQuery} 
+          />
         </CardContent>
       </Card>
 
