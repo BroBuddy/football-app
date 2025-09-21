@@ -23,11 +23,11 @@ const AttributeRating: React.FC<AttributeRatingProps> = ({ title, attributes }) 
   return (
     <div className="flex flex-col gap-1">
       {title && (
-        <h4 className="text-lg text-white font-semibold mb-2">{title}</h4>
+        <h3 className="text-lg text-white font-semibold mb-2">{title}</h3>
       )}
 
       {Object.entries(attributes).map(([key, value]) => (
-        <div key={key} className="flex items-center">
+        <div key={key} className="flex items-center bg-grey-900 rounded p-2 m-b-1">
           <OverallRating rating={value} />
 
           <span className="text-sm text-grey-200 m-l-3">
