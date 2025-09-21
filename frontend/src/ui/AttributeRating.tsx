@@ -33,7 +33,6 @@ const AttributeRating: React.FC<AttributeRatingProps> = ({ title, attributes }) 
           <span className="text-sm text-grey-200 m-l-3">
             {formatKey(key)}
           </span>
-
         </div>
       ))}
     </div>
