@@ -11,8 +11,16 @@ interface LeagueDetailHeaderProps {
 }
 
 const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
-  const totalMarketValue = league.teams.reduce((sum, team) => sum + team.marketValue, 0);
-  const canSimulateLeague = league.teams.length >= 10;
+  const leagueTeams = league.teams;
+  const totalMarketValue = leagueTeams.reduce((sum, team) => sum + team.marketValue, 0);
+
+  const estimatedSimulateTime = () => {
+    const amountTeams = leagueTeams.length;
+    const totalMatches = amountTeams * (amountTeams - 1) * 2;
+    const seconds = Math.round(totalMatches / 10);
+
+    return `up to ${seconds}s`;
+  }
 
   return (
     <CardHeader>
@@ -28,10 +36,8 @@ const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
           </h3>
         </div>
 
-        {canSimulateLeague && <div>
           <Link className='text-white'
-            to={`/simulation/${league.id}`}>Simulation</Link>
-        </div>}
+            to={`/simulation/${league.id}`}>Simulate ({estimatedSimulateTime()})</Link>
       </div>
 
       <div className="flex">
