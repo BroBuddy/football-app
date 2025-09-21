@@ -22,13 +22,15 @@ public class LeagueMapper {
     public LeagueListDTO toListDTO(League league) {
         validateLeague(league);
 
+        double marketValue = league.getTeams().stream()
+                .mapToDouble(Team::getMarketValue)
+                .sum();
+
         return new LeagueListDTO(
                 league.getId(),
                 league.getName(),
                 nationMapper.fromEntity(league.getNation()),
-                league.getTeamsSortedByMarketValue().stream()
-                        .map(teamMapper::toLeagueDTO)
-                        .toList()
+                marketValue
         );
     }
 

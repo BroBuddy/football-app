@@ -36,6 +36,7 @@ public class League {
     private Nation nation;
 
     @OneToMany(mappedBy = "league", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("marketValue DESC")
     private List<Team> teams;
 
     @CreationTimestamp
