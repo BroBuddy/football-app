@@ -24,32 +24,30 @@ const SimulationPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className='flex items-center'>
-                <h3>Simulation Results</h3>
-            </div>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className='flex items-center'>
+              <h3>Simulation Results</h3>
           </div>
+        </div>
 
-          <div className="flex">
-            <div className="flex items-center p-r-4 text-gray-200">
-                <Users size={15} className="m-r-1" />
-                <span className="text-sm">
-                    {tableData.length} teams
-                </span>
-            </div>
+        <div className="flex">
+          <div className="flex items-center p-r-4 text-gray-200">
+              <Users size={15} className="m-r-1" />
+              <span className="text-sm">
+                  {tableData.length} teams
+              </span>
           </div>
-        </CardHeader>
+        </div>
+      </CardHeader>
 
-        <CardContent className="m-y-4">
-            {tableData.map((row: TableRow) => (
-                <SimulationTeam key={row.id} row={row} />
-            ))}
-        </CardContent>
-      </Card>
-    </div>
+      <CardContent className="m-y-4">
+          {tableData.map((row: TableRow) => (
+              <SimulationTeam key={row.id} row={row} />
+          ))}
+      </CardContent>
+    </Card>
   );
 };
 
