@@ -8,6 +8,7 @@ import Loader from '@/ui/Loader';
 import { usePlayer } from '../hooks/usePlayer';
 import { useSimilarPlayers } from '../hooks/useSimilarPlayers';
 import PlayerSimilars from '../components/PlayerSimilars';
+import PlayerMetrics from '../components/PlayerMetrics';
 
 function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -51,6 +52,10 @@ function PlayerDetailPage() {
 
         <div className='col-12'>
           <PlayerAttributes player={player} />
+        </div>
+
+        <div className='col-12'>
+          <PlayerMetrics metrics={player.metrics} />
         </div>
         
         <div className='col-12'>

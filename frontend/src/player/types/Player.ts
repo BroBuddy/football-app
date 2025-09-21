@@ -1,6 +1,6 @@
 import { Team } from "@/team/types/Team";
 import { Nation } from "../../types/Nation";
-import { PlayerMetrics } from "./PlayerMetrics";
+import { Metrics } from "./PlayerMetrics";
 import { PlayerAttributes, MainAttributes } from "./PlayerAttributes";
 
 export interface Player {
@@ -19,7 +19,7 @@ export interface Player {
   positions: PlayerPositions;
   mainPositions: string;
   overallRating: number;
-  metrics: PlayerMetrics;
+  metrics: Metrics;
 }
 
 export interface PlayerPositions {

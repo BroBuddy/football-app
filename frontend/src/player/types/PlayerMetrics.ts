@@ -1,4 +1,4 @@
-export interface PlayerMetrics {
+export interface Metrics {
   xG: number;
   xA: number;
   xT: number;
