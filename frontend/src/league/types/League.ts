@@ -1,11 +1,26 @@
-import { Team } from "@/team/types/Team";
 import type { Nation } from "../../types/Nation";
 
-interface League {
+interface LeagueList {
   id: string;
   name: string;
   nation: Nation;
-  teams: Team[];
+  marketValue: number;
 }
 
-export type { League }
+interface LeagueDetail {
+  id: string;
+  name: string;
+  nation: Nation;
+  teams: LeagueTeam[]
+}
+
+interface LeagueTeam {
+  id: string;
+  name: string;
+  logoUrl: string;
+  marketValue: number;
+  playerCount: number;
+  playerAverageAge: number;
+}
+
+export type { LeagueList, LeagueDetail, LeagueTeam }

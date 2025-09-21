@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { fetchLeagues } from '../services/LeagueService';
-import type { League } from '../types/League';
+import type { LeagueList } from '../types/League';
 
-export const useLeagues = () => {
-  const [leagues, setLeagues] = useState<League[]>([]);
+export const useLeagueList = () => {
+  const [leagues, setLeagues] = useState<LeagueList[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

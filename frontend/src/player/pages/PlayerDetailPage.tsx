@@ -19,11 +19,11 @@ function PlayerDetailPage() {
   }
 
   if (playerError) {
-    return <div>Error: {playerError}</div>;
+    return <p>Error: {playerError}</p>;
   }
 
   if (!player) {
-    return <div>Player not found.</div>;
+    return <p>Player not found.</p>;
   }
 
   return (

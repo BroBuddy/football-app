@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.scss'
-import LeaguePage from './league/pages/LeaguePage'
-import TeamDetail from './team/pages/TeamDetail'
+import LeagueListPage from './league/pages/LeagueListPage'
+import LeagueDetailPage from './league/pages/LeagueDetailPage'
+import TeamDetailPage from './team/pages/TeamDetailPage'
 import PlayerDetailPage from './player/pages/PlayerDetailPage'
-import NavBar from './ui/NavBar'
-import PlayerSearchPage from './player/pages/PlayerSearchPage'
+import PlayerListPage from './player/pages/PlayerListPage'
 import SimulationPage from './simulation/pages/SimulationPage'
 import OverviewPage from './overview/pages/OverviewPage'
 import ScoutingPage from './scouting/pages/ScoutingPage'
+import NavBar from './ui/NavBar'
+import './App.scss'
 
 function App() {
   return (
@@ -17,9 +18,10 @@ function App() {
 
         <Routes>
           <Route path="/" element={<OverviewPage />} />
-          <Route path="/leagues" element={<LeaguePage />} />
-          <Route path="/teams/:id" element={<TeamDetail />} />
-          <Route path="/players" element={<PlayerSearchPage />} />
+          <Route path="/leagues" element={<LeagueListPage />} />
+          <Route path="/leagues/:id" element={<LeagueDetailPage />} />
+          <Route path="/teams/:id" element={<TeamDetailPage />} />
+          <Route path="/players" element={<PlayerListPage />} />
           <Route path="/players/:id" element={<PlayerDetailPage />} />
           <Route path="/simulation/:id" element={<SimulationPage />} />
           <Route path="/scouting" element={<ScoutingPage />} />

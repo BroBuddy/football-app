@@ -6,7 +6,7 @@ import Pagination from '@/ui/Pagination';
 import PlayerSearchInput from '../components/PlayerSearchInput';
 import { getPlayerCountText } from '@/utils';
 
-const PlayerSearchPage: React.FC = () => {
+const PlayerListPage: React.FC = () => {
   const { players, totalElements, totalPages, loading, error, query, setQuery, currentPage, setCurrentPage } = usePlayerSearch();
   const showPagination = totalElements > 20;
   
@@ -58,4 +58,4 @@ const PlayerSearchPage: React.FC = () => {
   );
 };
 
-export default PlayerSearchPage;
+export default PlayerListPage;

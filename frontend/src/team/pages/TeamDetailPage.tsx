@@ -6,7 +6,7 @@ import TeamPlayerList from '../components/TeamPlayerList';
 import Loader from '@/ui/Loader';
 import { useTeams } from '../hooks/useTeams';
 
-function TeamDetail() {
+function TeamDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { team, loading, error } = useTeams(id);
 
@@ -47,4 +47,4 @@ function TeamDetail() {
   );
 }
 
-export default TeamDetail;
+export default TeamDetailPage;
