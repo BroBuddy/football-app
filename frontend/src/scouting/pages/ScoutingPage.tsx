@@ -24,30 +24,34 @@ const ScoutingPage = () => {
     }
 
     return (
-        <>
-            <Card>
-                <CardHeader>
-                    <h2>Player Scouting</h2>
-                </CardHeader>
+        <div className='grid'>
+            <div className='col-12'>
+                <Card>
+                    <CardHeader>
+                        <h2>Player Scouting</h2>
+                    </CardHeader>
 
-                <CardContent>
-                    <ScoutingForm
-                        marketValueMax={marketValueMax}
-                        setMarketValueMax={setMarketValueMax}
-                        position={position}
-                        setPosition={setPosition}
-                        minValue={minValue}
-                        setMinValue={setMinValue}
-                        handleSubmit={handleSubmit}
-                        loading={loading}
-                    />
-                </CardContent>
-            </Card>
+                    <CardContent>
+                        <ScoutingForm
+                            marketValueMax={marketValueMax}
+                            setMarketValueMax={setMarketValueMax}
+                            position={position}
+                            setPosition={setPosition}
+                            minValue={minValue}
+                            setMinValue={setMinValue}
+                            handleSubmit={handleSubmit}
+                            loading={loading}
+                        />
+                    </CardContent>
+                </Card>
+            </div>
 
-            {loading && <Loader />}
+            <div className='col-12'>
+                {loading && <Loader />}
 
-            {!loading && searched && <ScoutingResult players={players} />}
-        </>
+                {!loading && searched && <ScoutingResult players={players} />}
+            </div>
+        </div>
     );
 };
 

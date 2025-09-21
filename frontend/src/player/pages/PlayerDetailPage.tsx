@@ -27,35 +27,40 @@ function PlayerDetailPage() {
   }
 
   return (
-    <>
-        <Card>
-            <CardHeader>
-                <PlayerHeader player={player} />
-            </CardHeader>
+    <div className='grid'>
+        <div className='col-12'>
+            <Card>
+              <CardHeader>
+                  <PlayerHeader player={player} />
+              </CardHeader>
 
-            <CardContent className='p-y-4'>
-                <div className='flex flex-row justify-between'>
-                    <div className='m-t-8'>
-                        <PlayerRadar player={player} />
-                    </div>
+              <CardContent className='p-y-6'>
+                  <div className='grid'>
+                      <div className='col-12 md:col-6'>
+                          <PlayerRadar player={player} />
+                      </div>
 
-                    <div className='m-t-8'>
-                        <PlayerPositions positions={player.positions} />
-                    </div>
-                </div>
+                      <div className='col-12 md:col-6'>
+                          <PlayerPositions positions={player.positions} />
+                      </div>
+                  </div>
 
-            </CardContent>
-        </Card>
+              </CardContent>
+          </Card>
+        </div>
+
+        <div className='col-12'>
+          <PlayerAttributes player={player} />
+        </div>
         
-          <PlayerSimilars
-            players={similarPlayers} 
-            loading={similarLoading} 
-            error={similarError} 
-        />
-
-        <PlayerAttributes player={player} />
-
-    </>
+        <div className='col-12'>
+            <PlayerSimilars
+              players={similarPlayers} 
+              loading={similarLoading} 
+              error={similarError} 
+          />
+        </div>
+    </div>
   );
 }
 

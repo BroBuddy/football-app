@@ -1,0 +1,41 @@
+$columns: 12;
+
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px
+);
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: 1rem;
+}
+
+@for $i from 1 through $columns {
+  .col-#{$i} {
+    grid-column: span $i;
+  }
+}
+
+@each $key, $value in $breakpoints {
+  @media (min-width: $value) {
+    @for $i from 1 through $columns {
+      .#{$key}\:col-#{$i} {
+        grid-column: span $i;
+      }
+    }
+  }
+}
+
+@each $key, $value in $breakpoints {
+  @media (min-width: $value) {
+    .#{$key}\:flex-col {
+      flex-direction: column;
+    }
+
+    .#{$key}\:flex-row {
+      flex-direction: row;
+    }
+  }
+}

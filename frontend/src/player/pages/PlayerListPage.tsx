@@ -19,42 +19,46 @@ const PlayerListPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <h2>Player Search</h2>
-        </CardHeader>
+    <div className='grid'>
+      <div className='col-12'>
+        <Card>
+          <CardHeader>
+            <h2>Player Search</h2>
+          </CardHeader>
 
-        <CardContent className='m-y-4'>
-          <PlayerSearchInput
-            query={query} 
-            setQuery={setQuery} 
-          />
-        </CardContent>
-      </Card>
+          <CardContent className='m-y-4'>
+            <PlayerSearchInput
+              query={query} 
+              setQuery={setQuery} 
+            />
+          </CardContent>
+        </Card>
+      </div>
 
-      {loading ? (
-        <Loader />
-      ) : (
-          <Card>
-            <CardHeader>
-              <h2>{getPlayerCountText(totalElements)}</h2>
+      <div className='col-12'>
+        {loading ? (
+          <Loader />
+        ) : (
+            <Card>
+              <CardHeader>
+                <h2>{getPlayerCountText(totalElements)}</h2>
+                
+                {showPagination && <Pagination 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />}
+              </CardHeader>
               
-              {showPagination && <Pagination 
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-              />}
-            </CardHeader>
-            
-            <CardContent className='m-y-4'>
-                <PlayerSearchResult
-                  players={players}
-                />
-            </CardContent>
-          </Card>
-      )}
-    </>
+              <CardContent className='m-y-4'>
+                  <PlayerSearchResult
+                    players={players}
+                  />
+              </CardContent>
+            </Card>
+        )}
+      </div>
+    </div>
   );
 };
 

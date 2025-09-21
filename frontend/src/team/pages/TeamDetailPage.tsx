@@ -23,27 +23,31 @@ function TeamDetailPage() {
   }
 
   return (
-    <>
-      <Card>
-        <CardHeader>
-          <TeamStartingHeader team={team} />          
-        </CardHeader>
-        
-          <CardContent className="m-t-4">
-            <TeamPlayerList players={team.startingPlayers} />
-          </CardContent>
-      </Card>
+    <div className='grid'>
+      <div className='col-12'>
+        <Card>
+          <CardHeader>
+            <TeamStartingHeader team={team} />          
+          </CardHeader>
+          
+            <CardContent className="m-t-4">
+              <TeamPlayerList players={team.startingPlayers} />
+            </CardContent>
+        </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <TeamRestingHeader team={team} />
-        </CardHeader>
-        
-          <CardContent className="m-t-4">
-            <TeamPlayerList players={team.restingPlayers} />
-          </CardContent>
-      </Card>
-    </>
+      <div className='col-12'>
+        <Card>
+          <CardHeader>
+            <TeamRestingHeader team={team} />
+          </CardHeader>
+          
+            <CardContent className="m-t-4">
+              <TeamPlayerList players={team.restingPlayers} />
+            </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
 

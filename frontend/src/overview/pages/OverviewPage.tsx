@@ -1,8 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/ui/Card";
 import { useBestPlayers } from "../hooks/useBestPlayers";
 import { PlayerDetail } from "../services/types/BestPlayers";
-import TeamPlayer from "@/team/components/TeamPlayer";
 import Loader from "@/ui/Loader";
+import OverviewPlayer from "../components/OverviewPlayer";
 
 const OverviewPage = () => {
   const { data, loading, error } = useBestPlayers();
@@ -24,19 +24,21 @@ const OverviewPage = () => {
   };
 
   return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid">
         {Object.entries(data).map(([attribute, players]) => (
-          <Card key={attribute}>
-            <CardHeader>
-              <h2>Best {formatAttributeName(attribute)} Players</h2>
-            </CardHeader>
-            
-            <CardContent>
-              {players.map((player: PlayerDetail) => (
-                <TeamPlayer key={player.id} player={player} />
-              ))}
-            </CardContent>
-          </Card>
+          <div key={attribute} className="col-12 md:col-6">
+            <Card>
+              <CardHeader>
+                <h2>Best {formatAttributeName(attribute)} Players</h2>
+              </CardHeader>
+
+              <CardContent>
+                {players.map((player: PlayerDetail) => (
+                  <OverviewPlayer key={player.id} player={player} />
+                ))}
+              </CardContent>
+            </Card>
+          </div>
         ))}
       </div>
   );

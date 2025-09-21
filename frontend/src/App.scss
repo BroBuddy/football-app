@@ -4,6 +4,7 @@
 @import './styles/flexbox';
 @import './styles/sizing';
 @import './styles/colors';
+@import './styles/columns';
 
 @tailwind base;
 @tailwind components;
@@ -47,7 +48,6 @@ input, button {
 .card {
     border: 1px solid;
     border-color: var(--grey-600);
-    margin-bottom: 20px;
     padding: 10px 25px;
 }
 
