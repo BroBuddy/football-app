@@ -88,7 +88,7 @@ const ScoutingForm: React.FC<ScoutingFormProps> = ({
                         <option value={0} disabled>Select Value</option>
                         {maxMarketValues.map((value: number) => (
                             <option key={value} value={value}>
-                                {value}
+                                {value}.0M
                             </option>
                         ))}
                     </select>
