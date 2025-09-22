@@ -3,6 +3,7 @@ import Image from '@/ui/Image';
 import { Users, TrendingUp } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
+import Badge from '@/ui/Badge';
 
 interface LeagueDetailHeaderProps {
   league: LeagueDetail;
@@ -24,21 +25,21 @@ const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
             {league.name}
           </h3>
         </div>
-      </div>
 
-      <div className="flex">
-        <div className="flex items-center p-r-4 text-grey-200">
-          <Users size={15} className="m-r-1" />
-          <span className="text-sm">
-            {league.teams.length} teams
-          </span>
-        </div>
+        <div className="flex gap-4">
+          <Badge className='flex items-center'>
+            <Users size={15} className="m-r-1" />
+            <span className="text-md">
+              {league.teams.length} teams
+            </span>
+          </Badge>
 
-        <div className="flex items-center text-grey-200">
-          <TrendingUp size={15} className="m-r-1" />
-          <span className="text-sm">
-            {formatMarketValue(totalMarketValue)} total
-          </span>
+          <Badge className='flex items-center'>
+            <TrendingUp size={15} className="m-r-1" />
+            <span className="text-md">
+              {formatMarketValue(totalMarketValue)} total
+            </span>
+          </Badge>
         </div>
       </div>
     </>

@@ -58,7 +58,7 @@ function TeamDetailPage() {
       <div className='grid'>
         <div className='col-12'>
           <Card>
-            <CardHeader className='m-b-2'>
+            <CardHeader>
               <TeamHeader team={team} />
             </CardHeader>
           </Card>

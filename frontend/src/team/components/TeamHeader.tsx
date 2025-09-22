@@ -1,8 +1,9 @@
 import { Team } from '../types/Team';
 import Image from '@/ui/Image';
-import { TrendingUp, Users } from 'lucide-react';
+import { TrendingUp, User } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
+import Badge from '@/ui/Badge';
 
 interface TeamHeaderProps {
   team: Team;
@@ -24,21 +25,21 @@ const TeamHeader: React.FC<TeamHeaderProps> = ({ team }) => {
             {team.name}
           </h3>
         </div>
-      </div>
 
-      <div className="flex">
-        <div className="flex items-center p-r-4 text-grey-200">
-          <Users size={15} className="m-r-1" />
-          <span className="text-sm">
-            {totalPlayers} players
-          </span>
-        </div>
+        <div className='flex gap-4'>
+          <Badge className='flex items-center'>
+            <User size={15} className="m-r-1" />
+            <span className="text-md">
+              {totalPlayers} players
+            </span>
+          </Badge>
 
-        <div className="flex items-center text-grey-200">
-          <TrendingUp size={15} className="m-r-1" />
-          <span className="text-sm">
-            {formatMarketValue(team.marketValue)} total
-          </span>
+          <Badge className='flex items-center'>
+            <TrendingUp size={15} className="m-r-1" />
+            <span className="text-md">
+              {formatMarketValue(team.marketValue)} total
+            </span>
+          </Badge>
         </div>
       </div>
     </>

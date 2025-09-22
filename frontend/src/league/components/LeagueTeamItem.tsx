@@ -1,6 +1,6 @@
 import Image from '@/ui/Image';
 import { formatMarketValue } from '@/utils';
-import { Users } from 'lucide-react';
+import { User } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { LeagueTeam } from '../types/League';
@@ -25,7 +25,7 @@ const LeagueTeamItem: React.FC<LeagueTeamProps> = ({ team }) => {
       
       <div className='flex flex-row items-center gap-3'>
         <div className="flex items-center text-left w-10 text-grey-200">
-            <Users size={15} className="m-r-1" />
+            <User size={15} className="m-r-1" />
             <span className='text-sm'>
                 {team.playerCount}
             </span>
