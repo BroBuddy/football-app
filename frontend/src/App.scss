@@ -1,14 +1,10 @@
-@import './styles/typography';
-@import './styles/spacing';
-@import './styles/utilities';
-@import './styles/flexbox';
-@import './styles/sizing';
-@import './styles/colors';
-@import './styles/columns';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@use './styles/typography';
+@use './styles/spacing';
+@use './styles/utilities';
+@use './styles/flexbox';
+@use './styles/sizing';
+@use './styles/colors';
+@use './styles/columns';
 
 :root {
   --black: #000;

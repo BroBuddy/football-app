@@ -1,3 +1,5 @@
+@use "sass:map";
+
 $base-spacing: 0.25rem;
 
 $spacing-multipliers: (
@@ -15,14 +17,14 @@ $spacing-multipliers: (
 .p {
   @each $size-key, $multiplier in $spacing-multipliers {
     &-#{$size-key} {
-      padding: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      padding: map.get($spacing-multipliers, $size-key) * $base-spacing;
     }
   }
 
   &-t {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-top: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -30,7 +32,7 @@ $spacing-multipliers: (
   &-r {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-right: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -38,7 +40,7 @@ $spacing-multipliers: (
   &-b {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-bottom: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -46,7 +48,7 @@ $spacing-multipliers: (
   &-l {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-left: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -54,8 +56,8 @@ $spacing-multipliers: (
   &-x {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
-        padding-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-left: map.get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-right: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -63,8 +65,8 @@ $spacing-multipliers: (
   &-y {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        padding-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
-        padding-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-top: map.get($spacing-multipliers, $size-key) * $base-spacing;
+        padding-bottom: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -73,14 +75,14 @@ $spacing-multipliers: (
 .m {
   @each $size-key, $multiplier in $spacing-multipliers {
     &-#{$size-key} {
-      margin: map-get($spacing-multipliers, $size-key) * $base-spacing;
+      margin: map.get($spacing-multipliers, $size-key) * $base-spacing;
     }
   }
 
   &-t {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-top: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -88,7 +90,7 @@ $spacing-multipliers: (
   &-r {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-right: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -96,7 +98,7 @@ $spacing-multipliers: (
   &-b {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-bottom: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -104,7 +106,7 @@ $spacing-multipliers: (
   &-l {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-left: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -112,8 +114,8 @@ $spacing-multipliers: (
   &-x {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-left: map-get($spacing-multipliers, $size-key) * $base-spacing;
-        margin-right: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-left: map.get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-right: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }
@@ -121,8 +123,8 @@ $spacing-multipliers: (
   &-y {
     @each $size-key, $multiplier in $spacing-multipliers {
       &-#{$size-key} {
-        margin-top: map-get($spacing-multipliers, $size-key) * $base-spacing;
-        margin-bottom: map-get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-top: map.get($spacing-multipliers, $size-key) * $base-spacing;
+        margin-bottom: map.get($spacing-multipliers, $size-key) * $base-spacing;
       }
     }
   }

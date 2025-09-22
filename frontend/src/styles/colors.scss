@@ -13,11 +13,11 @@ $colors: (
 );
 
 @each $name, $hex in $colors {
-  .text-#{$name} {
+  .text-#{"" + $name} {
     color: $hex;
   }
 
-  .bg-#{$name} {
+  .bg-#{"" + $name} {
     background-color: $hex;
   }
 }
