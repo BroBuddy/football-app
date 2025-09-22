@@ -1,207 +1,182 @@
 package com.buddy.football.team.service;
 
 import com.buddy.football.player.entity.Player;
+import com.buddy.football.simulation.dto.MatchLineupDTO;
+import com.buddy.football.simulation.dto.MatchMapper;
+import com.buddy.football.simulation.dto.MatchTeamDTO;
 import com.buddy.football.team.dto.TeamDetailDTO;
+import com.buddy.football.team.dto.TeamListDTO;
 import com.buddy.football.team.dto.TeamMapper;
 import com.buddy.football.team.entity.Team;
 import com.buddy.football.team.repository.TeamRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class TeamServiceTest {
 
     @Mock
     private TeamRepository teamRepository;
-
     @Mock
     private TeamMapper teamMapper;
+    @Mock
+    private MatchMapper matchMapper;
 
     @InjectMocks
     private TeamService teamService;
 
-    private Team team;
-    private UUID teamId;
-
-    @BeforeEach
-    void setUp() {
-        teamId = UUID.randomUUID();
-        team = new Team();
-        team.setId(teamId);
-        team.setMarketValue(1000.0);
-    }
-
     @Test
-    void getAllTeams_shouldReturnSortedPage() {
-        // Arrange
+    void shouldReturnPageOfTeamsSortedByMarketValue() {
         int page = 0;
         int size = 10;
-        Pageable sortedPageable = PageRequest.of(page, size, Sort.by("marketValue").descending());
-        Page<Team> teamPage = new PageImpl<>(List.of(team));
-        when(teamRepository.findAll(sortedPageable)).thenReturn(teamPage);
+        Pageable expectedPageable = PageRequest.of(page, size, Sort.by("marketValue").descending());
+        Page<Team> teamPage = new PageImpl<>(Collections.singletonList(new Team()));
 
-        // Act
+        when(teamRepository.findAll(any(Pageable.class))).thenReturn(teamPage);
+
         Page<Team> result = teamService.getAllTeams(page, size);
 
-        // Assert
-        assertNotNull(result);
-        assertEquals(1, result.getTotalElements());
-        verify(teamRepository).findAll(sortedPageable);
+        assertEquals(teamPage, result);
+        verify(teamRepository).findAll(expectedPageable);
     }
 
     @Test
-    void getAllTeamsByLeagueId_shouldReturnListOfTeams() {
-        // Arrange
-        UUID leagueId = UUID.randomUUID();
-        List<Team> teamList = List.of(team);
-        when(teamRepository.findAllByLeagueId(leagueId)).thenReturn(teamList);
+    void shouldUpdateTeamMarketValueAndSaveTeam() {
+        Team team = new Team();
 
-        // Act
-        List<Team> result = teamService.getAllTeamsByLeagueId(leagueId);
-
-        // Assert
-        assertNotNull(result);
-        assertFalse(result.isEmpty());
-        assertEquals(1, result.size());
-        verify(teamRepository).findAllByLeagueId(leagueId);
-    }
-
-    @Test
-    void getSortedTeamsByMarketValue_shouldReturnTeamsSortedByMarketValueDesc() {
-        // Arrange
-        Team team1 = new Team();
-        team1.setId(UUID.randomUUID());
-        team1.setMarketValue(5000.0);
-
-        Team team2 = new Team();
-        team2.setId(UUID.randomUUID());
-        team2.setMarketValue(10000.0);
-
-        Team team3 = new Team();
-        team3.setId(UUID.randomUUID());
-        team3.setMarketValue(7500.0);
-
-        List<Team> unsortedTeams = List.of(team1, team2, team3);
-        when(teamRepository.findAll()).thenReturn(unsortedTeams);
-
-        // Act
-        List<Team> result = teamService.getSortedTeamsByMarketValue();
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(3, result.size());
-        assertEquals(10000.0, result.get(0).getMarketValue());
-        assertEquals(7500.0, result.get(1).getMarketValue());
-        assertEquals(5000.0, result.get(2).getMarketValue());
-        verify(teamRepository).findAll();
-    }
-
-    @Test
-    void updateTeamStats_shouldUpdateMarketValueAndSave() {
-        // Arrange
         Player player1 = new Player();
-        player1.setMarketValue(50.0);
+        player1.setMarketValue(10000000.0);
+
         Player player2 = new Player();
-        player2.setMarketValue(75.0);
-        List<Player> players = List.of(player1, player2);
+        player2.setMarketValue(20000000.0);
 
-        ArgumentCaptor<Team> teamCaptor = ArgumentCaptor.forClass(Team.class);
+        List<Player> players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
 
-        // Act
+        double expectedTotalValue = 30000000.0;
+
         teamService.updateTeamStats(team, players);
 
-        // Assert
-        verify(teamRepository).save(teamCaptor.capture());
-        Team savedTeam = teamCaptor.getValue();
-        assertEquals(125.0, savedTeam.getMarketValue());
+        assertEquals(expectedTotalValue, team.getMarketValue());
+        verify(teamRepository).save(team);
     }
 
     @Test
-    void updateTeamStats_withNullPlayers_shouldDoNothing() {
-        // Act
-        teamService.updateTeamStats(team, null);
+    void shouldNotChangeMarketValueWhenPlayersListIsEmpty() {
+        Team team = new Team();
+        team.setMarketValue(100.0);
+        List<Player> players = new ArrayList<>();
 
-        // Assert
-        verify(teamRepository, never()).save(any(Team.class));
+        teamService.updateTeamStats(team, players);
+
+        assertEquals(100.0, team.getMarketValue());
     }
 
     @Test
-    void updateTeamStats_withEmptyPlayers_shouldDoNothing() {
-        // Act
-        teamService.updateTeamStats(team, Collections.emptyList());
+    void shouldReturnTeamDetailsDTOWhenTeamExists() {
+        UUID teamId = UUID.randomUUID();
+        Team team = new Team();
+        team.setId(teamId);
+        TeamDetailDTO dto = new TeamDetailDTO(teamId, "Test Team");
 
-        // Assert
-        verify(teamRepository, never()).save(any(Team.class));
-    }
+        when(teamRepository.findById(teamId)).thenReturn(Optional.of(team));
+        when(teamMapper.toDetailDTO(team)).thenReturn(dto);
 
-    @Test
-    void getTeamDetails_shouldReturnTeamDetailDTO() {
-        // Arrange
-        UUID testTeamId = UUID.randomUUID();
-        String testTeamName = "Test Team";
-        TeamDetailDTO expectedDTO = new TeamDetailDTO(testTeamId, testTeamName);        when(teamRepository.findTeamWithAllDetails(teamId)).thenReturn(Optional.of(team));
-        when(teamMapper.toDetailDTO(any(Team.class))).thenReturn(expectedDTO);
+        Optional<TeamDetailDTO> result = teamService.getTeamDetails(teamId);
 
-        // Act
-        TeamDetailDTO result = teamService.getTeamDetails(teamId);
-
-        // Assert
-        assertNotNull(result);
-        assertEquals(expectedDTO, result);
-        verify(teamRepository).findTeamWithAllDetails(teamId);
-        verify(teamMapper).toDetailDTO(team);
-    }
-
-    @Test
-    void getTeamDetails_shouldReturnNull_whenTeamNotFound() {
-        // Arrange
-        when(teamRepository.findTeamWithAllDetails(teamId)).thenReturn(Optional.empty());
-
-        // Act
-        TeamDetailDTO result = teamService.getTeamDetails(teamId);
-
-        // Assert
-        assertNull(result);
-        verify(teamRepository).findTeamWithAllDetails(teamId);
-        verify(teamMapper, never()).toDetailDTO(any(Team.class));
-    }
-
-    @Test
-    void getTeamWithAllDetails_shouldReturnTeamOptional() {
-        // Arrange
-        when(teamRepository.findTeamWithAllDetails(teamId)).thenReturn(Optional.of(team));
-
-        // Act
-        Optional<Team> result = teamService.getTeamWithAllDetails(teamId);
-
-        // Assert
         assertTrue(result.isPresent());
-        assertEquals(team, result.get());
-        verify(teamRepository).findTeamWithAllDetails(teamId);
+        assertEquals(dto, result.get());
     }
 
     @Test
-    void getTeamWithAllDetails_shouldReturnEmptyOptional_whenTeamNotFound() {
-        // Arrange
-        when(teamRepository.findTeamWithAllDetails(teamId)).thenReturn(Optional.empty());
+    void shouldReturnEmptyOptionalWhenTeamDoesNotExist() {
+        UUID teamId = UUID.randomUUID();
+        when(teamRepository.findById(teamId)).thenReturn(Optional.empty());
 
-        // Act
-        Optional<Team> result = teamService.getTeamWithAllDetails(teamId);
+        Optional<TeamDetailDTO> result = teamService.getTeamDetails(teamId);
 
-        // Assert
         assertFalse(result.isPresent());
-        verify(teamRepository).findTeamWithAllDetails(teamId);
+    }
+
+    @Test
+    void shouldReturnListOfTeamListDTOsByLeagueId() {
+        UUID leagueId = UUID.randomUUID();
+        TeamListDTO teamDto = new TeamListDTO(UUID.randomUUID(), "Team A", "a.png", 1000000.0, 25);
+        List<TeamListDTO> expectedList = List.of(teamDto);
+
+        when(teamRepository.findTeamsByLeagueId(leagueId)).thenReturn(expectedList);
+
+        List<TeamListDTO> result = teamService.getTeamsByLeagueId(leagueId);
+
+        assertEquals(expectedList, result);
+    }
+
+    @Test
+    void shouldReturnMatchTeamDTOWhenBothTeamsExist() {
+        UUID homeId = UUID.randomUUID();
+        UUID awayId = UUID.randomUUID();
+        Team homeTeam = new Team();
+        homeTeam.setId(homeId);
+        Team awayTeam = new Team();
+        awayTeam.setId(awayId);
+
+        MatchLineupDTO homeLineup = Mockito.mock(MatchLineupDTO.class);
+        MatchLineupDTO awayLineup = Mockito.mock(MatchLineupDTO.class);
+
+        when(teamRepository.findById(homeId)).thenReturn(Optional.of(homeTeam));
+        when(teamRepository.findById(awayId)).thenReturn(Optional.of(awayTeam));
+        when(matchMapper.toLineupDTO(homeTeam)).thenReturn(homeLineup);
+        when(matchMapper.toLineupDTO(awayTeam)).thenReturn(awayLineup);
+
+        Optional<MatchTeamDTO> result = teamService.getMatchupTeams(homeId, awayId);
+
+        assertTrue(result.isPresent());
+        MatchTeamDTO dto = result.get();
+
+        assertEquals(homeLineup, dto.home());
+        assertEquals(awayLineup, dto.away());
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalWhenHomeTeamDoesNotExist() {
+        UUID homeId = UUID.randomUUID();
+        UUID awayId = UUID.randomUUID();
+
+        when(teamRepository.findById(homeId)).thenReturn(Optional.empty());
+        when(teamRepository.findById(awayId)).thenReturn(Optional.of(new Team()));
+
+        Optional<MatchTeamDTO> result = teamService.getMatchupTeams(homeId, awayId);
+
+        assertFalse(result.isPresent());
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalWhenAwayTeamDoesNotExist() {
+        UUID homeId = UUID.randomUUID();
+        UUID awayId = UUID.randomUUID();
+
+        when(teamRepository.findById(homeId)).thenReturn(Optional.of(new Team()));
+        when(teamRepository.findById(awayId)).thenReturn(Optional.empty());
+
+        Optional<MatchTeamDTO> result = teamService.getMatchupTeams(homeId, awayId);
+
+        assertFalse(result.isPresent());
     }
 }

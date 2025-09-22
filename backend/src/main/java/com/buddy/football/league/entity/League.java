@@ -1,8 +1,6 @@
 package com.buddy.football.league.entity;
 
 import com.buddy.football.nation.entity.Nation;
-import com.buddy.football.team.dto.TeamLeagueDTO;
-import com.buddy.football.team.dto.TeamMapper;
 import com.buddy.football.team.entity.Team;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -36,7 +34,6 @@ public class League {
     private Nation nation;
 
     @OneToMany(mappedBy = "league", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("marketValue DESC")
     private List<Team> teams;
 
     @CreationTimestamp

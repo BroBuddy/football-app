@@ -7,14 +7,13 @@ public record TeamListDTO(
         String name,
         String logoUrl,
         Double marketValue,
-        Integer playerCount,
-        Double playerAverageAge
+        Integer playerCount
 ) {
     public TeamListDTO(String name, double marketValue) {
-        this(null, name, null, marketValue, null, null);
+        this(null, name, null, marketValue, null);
     }
 
     public TeamListDTO(UUID id, String name, double marketValue) {
-        this(id, name, null, marketValue, null, null);
+        this(id, name, null, marketValue, null);
     }
 }

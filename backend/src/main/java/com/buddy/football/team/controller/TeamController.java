@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -40,8 +41,8 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TeamDetailDTO> getTeamById(@PathVariable UUID id) {
-        TeamDetailDTO teamDetails = teamService.getTeamDetails(id);
+    public ResponseEntity<Optional<TeamDetailDTO>> getTeamById(@PathVariable UUID id) {
+        Optional<TeamDetailDTO> teamDetails = teamService.getTeamDetails(id);
 
         if (teamDetails == null) {
             return ResponseEntity.notFound().build();

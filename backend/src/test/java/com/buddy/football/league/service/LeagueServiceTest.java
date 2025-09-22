@@ -1,27 +1,23 @@
 package com.buddy.football.league.service;
 
 import com.buddy.football.league.dto.LeagueListDTO;
-import com.buddy.football.league.dto.LeagueMapper;
 import com.buddy.football.league.entity.League;
 import com.buddy.football.league.repository.LeagueRepository;
-import com.buddy.football.nation.entity.Nation;
-import com.buddy.football.team.entity.Team;
+import com.buddy.football.league.dto.LeagueMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class LeagueServiceTest {
 
     @Mock
@@ -33,78 +29,43 @@ class LeagueServiceTest {
     @InjectMocks
     private LeagueService leagueService;
 
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     @Test
-    void shouldReturnAllLeagues() {
+    void shouldReturnAllLeaguesAsDtoList() {
         // Given
-        Nation nation1 = new Nation("Germany", "de.png");
-        List<Team> teams1 = new ArrayList<>();
+        League league = new League();
+        league.setId(UUID.randomUUID());
+        league.setName("Test League");
+        List<League> leagues = List.of(league);
 
-        League league1 = new League("Bundesliga", nation1, teams1, LocalDateTime.now(), LocalDateTime.now());
-        league1.setId(UUID.randomUUID());
+        LeagueListDTO dto = new LeagueListDTO(league.getId(), league.getName());
 
-        Nation nation2 = new Nation("England", "en.png");
-        List<Team> teams2 = new ArrayList<>();
-
-        League league2 = new League("Premier League", nation2, teams2, LocalDateTime.now(), LocalDateTime.now());
-        league2.setId(UUID.randomUUID());
-
-        LeagueListDTO dto1 = new LeagueListDTO(league1.getId(), "Bundesliga", null, 0.0);
-        LeagueListDTO dto2 = new LeagueListDTO(league2.getId(), "Premier League", null, 0.0);
-
-        when(leagueRepository.findAll()).thenReturn(List.of(league1, league2));
-        when(leagueMapper.toListDTO(league1)).thenReturn(dto1);
-        when(leagueMapper.toListDTO(league2)).thenReturn(dto2);
+        when(leagueRepository.findAll()).thenReturn(leagues);
+        when(leagueMapper.toListDTO(league)).thenReturn(dto);
 
         // When
         List<LeagueListDTO> result = leagueService.getAllLeagues();
 
         // Then
         assertNotNull(result);
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(l -> l.name().equals("Bundesliga")));
-        assertTrue(result.stream().anyMatch(l -> l.name().equals("Premier League")));
-
-        verify(leagueRepository, times(1)).findAll();
-        verify(leagueMapper, times(2)).toListDTO(any(League.class));
+        assertEquals(1, result.size());
+        assertEquals("Test League", result.get(0).name());
     }
 
     @Test
-    void shouldReturnSortedLeagueById() {
+    void shouldReturnEmptyListWhenNoLeaguesExist() {
         // Given
-        UUID leagueId = UUID.randomUUID();
-        Nation nation = new Nation("Germany", "de.png");
-
-        Team teamA = new Team("Team A", null, 50000000.0, null, new ArrayList<>(), LocalDateTime.now(), LocalDateTime.now());
-        teamA.setId(UUID.randomUUID());
-
-        Team teamB = new Team("Team B", null, 100000000.0, null, new ArrayList<>(), LocalDateTime.now(), LocalDateTime.now());
-        teamB.setId(UUID.randomUUID());
-
-        Team teamC = new Team("Team C", null, 75000000.0, null, new ArrayList<>(), LocalDateTime.now(), LocalDateTime.now());
-        teamC.setId(UUID.randomUUID());
-
-        List<Team> unsortedTeams = new ArrayList<>(List.of(teamA, teamB, teamC));
-
-        League league = new League("Bundesliga", nation, unsortedTeams, LocalDateTime.now(), LocalDateTime.now());
-        league.setId(leagueId);
-
-        teamA.setLeague(league);
-        teamB.setLeague(league);
-        teamC.setLeague(league);
-
-        when(leagueRepository.findById(leagueId)).thenReturn(Optional.of(league));
+        when(leagueRepository.findAll()).thenReturn(Collections.emptyList());
 
         // When
-        Optional<League> result = leagueService.getLeagueById(leagueId);
+        List<LeagueListDTO> result = leagueService.getAllLeagues();
 
         // Then
-        assertTrue(result.isPresent());
-        List<Team> sortedTeams = result.get().getTeams();
-
-        assertEquals("Team B", sortedTeams.get(0).getName());
-        assertEquals("Team C", sortedTeams.get(1).getName());
-        assertEquals("Team A", sortedTeams.get(2).getName());
-
-        verify(leagueRepository, times(1)).findById(leagueId);
+        assertNotNull(result);
+        assertEquals(0, result.size());
     }
 }

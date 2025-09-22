@@ -46,14 +46,10 @@ class LeagueControllerTest {
     @Test
     void shouldReturnLeagueById() throws Exception {
         UUID id = UUID.randomUUID();
-        League league = new League();
-        league.setId(id);
-        league.setName("Premier League");
 
         LeagueDetailDTO dto = new LeagueDetailDTO(id, "Premier League");
 
-        when(leagueService.getLeagueById(id)).thenReturn(Optional.of(league));
-        when(leagueMapper.toDetailDTO(league)).thenReturn(dto);
+        when(leagueService.getLeagueById(id)).thenReturn(Optional.of(dto));
 
         mockMvc.perform(get("/api/leagues/" + id))
                 .andExpect(status().isOk())
@@ -68,5 +64,20 @@ class LeagueControllerTest {
 
         mockMvc.perform(get("/api/leagues/" + id))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void shouldReturnEmptyList() throws Exception {
+        when(leagueService.getAllLeagues()).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/leagues"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    void shouldReturnBadRequestForMalformedId() throws Exception {
+        mockMvc.perform(get("/api/leagues/not-a-valid-uuid"))
+                .andExpect(status().isBadRequest());
     }
 }

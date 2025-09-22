@@ -1,20 +1,25 @@
 package com.buddy.football.team.repository;
 
+import com.buddy.football.team.dto.TeamListDTO;
 import com.buddy.football.team.entity.Team;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.List;
 
 @Repository
 public interface TeamRepository extends JpaRepository<Team, UUID> {
-    Optional<Team> findByName(String name);
-    List<Team> findAllByLeagueId(UUID leagueId);
 
-    @Query("SELECT t FROM Team t JOIN FETCH t.players p JOIN FETCH p.nation WHERE t.id = :teamId")
-    Optional<Team> findTeamWithAllDetails(@Param("teamId") UUID teamId);
+    @EntityGraph(attributePaths = "players")
+    Optional<Team> findById(UUID teamId);
+
+    @Query("SELECT new com.buddy.football.team.dto.TeamListDTO(t.id, t.name, t.logoUrl, t.marketValue, SIZE(t.players)) " +
+            "FROM Team t WHERE t.league.id = :leagueId " +
+            "ORDER BY t.marketValue DESC")
+    List<TeamListDTO> findTeamsByLeagueId(@Param("leagueId") UUID leagueId);
 }

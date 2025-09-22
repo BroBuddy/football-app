@@ -14,6 +14,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.Mockito.when;
@@ -70,7 +71,7 @@ class TeamControllerTest {
                 List.of()  // Resting players
         );
 
-        when(teamService.getTeamDetails(id)).thenReturn(dto);
+        when(teamService.getTeamDetails(id)).thenReturn(Optional.of(dto));
 
         mockMvc.perform(get("/api/teams/{id}", id)
                         .accept(MediaType.APPLICATION_JSON))

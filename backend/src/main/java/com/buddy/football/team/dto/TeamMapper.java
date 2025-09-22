@@ -26,8 +26,7 @@ public class TeamMapper {
                 team.getName(),
                 team.getLogoUrl(),
                 team.getMarketValue(),
-                team.getPlayers().size(),
-                team.getPlayersAverageAge()
+                team.getPlayers().size()
         );
     }
 
