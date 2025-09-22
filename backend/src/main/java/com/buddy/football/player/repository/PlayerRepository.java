@@ -17,10 +17,13 @@ public interface PlayerRepository extends JpaRepository<Player, UUID>, JpaSpecif
     List<Player> findAll();
     Page<Player> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName, Pageable pageable);
     List<Player> findTop5ByMainPositionsContainingAndOverallRatingBetweenAndIdIsNot(
-            String mainPositions,
-            Integer minOverallRating,
-            Integer maxOverallRating,
-            UUID id
+            String positions, int min, int max, UUID id
+    );
+    List<Player> findTop5ByMainPositionsContainingAndOverallRatingBetweenAndIdIsNotAndTeam_League_Id(
+            String positions, int min, int max, UUID id, UUID leagueId
+    );
+    List<Player> findPlayersByMainPositionsContainingAndOverallRatingBetweenAndIdIsNotAndTeam_League_IdIsNot(
+            String positions, int min, int max, UUID id, UUID leagueId
     );
     List<Player> findTop5ByOrderByMainAttributes_DribblingDesc();
     List<Player> findTop5ByOrderByMainAttributes_ShootingDesc();

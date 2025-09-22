@@ -70,12 +70,35 @@ public class PlayerService {
         int minRating = Math.max(0, overallRating - 5);
         int maxRating = Math.min(100, overallRating + 5);
 
-        return playerRepository.findTop5ByMainPositionsContainingAndOverallRatingBetweenAndIdIsNot(
+        UUID leagueId = referencePlayer.getTeam().getLeague().getId();
+        List<Player> similarPlayers = playerRepository.findTop5ByMainPositionsContainingAndOverallRatingBetweenAndIdIsNotAndTeam_League_Id(
                 referencePlayer.getMainPositions(),
                 minRating,
                 maxRating,
-                id
+                id,
+                leagueId
         );
+
+        if (similarPlayers.size() < 5) {
+            List<Player> playersFromOtherLeagues = playerRepository.findPlayersByMainPositionsContainingAndOverallRatingBetweenAndIdIsNotAndTeam_League_IdIsNot(
+                    referencePlayer.getMainPositions(),
+                    minRating,
+                    maxRating,
+                    id,
+                    leagueId
+            );
+
+            for (Player otherPlayer : playersFromOtherLeagues) {
+                if (similarPlayers.size() >= 5) {
+                    break;
+                }
+                if (!similarPlayers.contains(otherPlayer)) {
+                    similarPlayers.add(otherPlayer);
+                }
+            }
+        }
+
+        return similarPlayers;
     }
 
     public List<PlayerListDTO> playerScouting(double marketValueMax, String position, int minValue) {
