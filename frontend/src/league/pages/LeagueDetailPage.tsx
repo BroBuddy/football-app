@@ -24,7 +24,7 @@ const LeagueDetailPage = () => {
 
   return (
     <Card>
-        <CardHeader>
+        <CardHeader className='m-b-2'>
             <LeagueDetailHeader league={league} />
         </CardHeader>
 

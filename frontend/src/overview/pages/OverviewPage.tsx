@@ -29,7 +29,7 @@ const OverviewPage = () => {
           <div key={attribute} className="col-12 md:col-6">
             <Card>
               <CardHeader>
-                <h2>Best {formatAttributeName(attribute)} Players</h2>
+                <h3>Best {formatAttributeName(attribute)} Players</h3>
               </CardHeader>
 
               <CardContent>

@@ -8,6 +8,7 @@
 
 :root {
   --black: #000;
+  --green: #001E00;
   --grey-900: #111;
   --grey-800: #222;
   --grey-700: #333;
@@ -29,7 +30,7 @@
 }
 
 body {
-    background-color: var(--black);
+    background-color: var(--green);
     color: var(--white);
 }
 
@@ -41,15 +42,23 @@ input, button {
     border: 1px solid var(--grey-200);
 }
 
+.border {
+    border: 1px solid var(--grey-600);
+}
+
 .card {
-    border: 1px solid;
-    border-color: var(--grey-600);
+    border: 1px solid var(--grey-600);
+    background-color: var(--black);
     padding: 10px 25px;
 }
 
 .badge {
   background-color: var(--grey-600);
   padding: 3px 6px;
+}
+
+.text-bold {
+    font-weight: bold;
 }
 
 h1 {

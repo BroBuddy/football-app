@@ -1,18 +1,18 @@
 import { Team } from '../types/Team';
-import { CardHeader } from '@/ui/Card';
 import Image from '@/ui/Image';
-import Badge from '@/ui/Badge';
 import { TrendingUp, Users } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
 
-interface TeamStartingHeaderProps {
+interface TeamHeaderProps {
   team: Team;
 }
 
-const TeamStartingHeader: React.FC<TeamStartingHeaderProps> = ({ team }) => {
+const TeamHeader: React.FC<TeamHeaderProps> = ({ team }) => {
+  const totalPlayers = team.startingPlayers.length + team.restingPlayers.length;
+
   return (
-    <CardHeader>
+    <>
       <div className="flex items-center justify-between">
         <div className='flex items-center'>
           <Image
@@ -24,27 +24,25 @@ const TeamStartingHeader: React.FC<TeamStartingHeaderProps> = ({ team }) => {
             {team.name}
           </h3>
         </div>
-
-        <div>
-          <Badge className='flex items-center'>
-            <TrendingUp className="w-2 m-r-1" />
-            <span className="text-md">
-              {formatMarketValue(team.marketValue)}
-            </span>
-          </Badge>
-        </div>
       </div>
-      
+
       <div className="flex">
         <div className="flex items-center p-r-4 text-grey-200">
           <Users size={15} className="m-r-1" />
           <span className="text-sm">
-            {team.startingPlayers.length} players
+            {totalPlayers} players
+          </span>
+        </div>
+
+        <div className="flex items-center text-grey-200">
+          <TrendingUp size={15} className="m-r-1" />
+          <span className="text-sm">
+            {formatMarketValue(team.marketValue)} total
           </span>
         </div>
       </div>
-    </CardHeader>
+    </>
   );
 };
 
-export default TeamStartingHeader;
+export default TeamHeader;

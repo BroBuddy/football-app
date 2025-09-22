@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/ui/Card';
-import TeamStartingHeader from '../components/TeamStartingHeader';
-import TeamRestingHeader from '../components/TeamRestingHeader';
+import TeamHeader from '../components/TeamHeader';
 import TeamPlayerList from '../components/TeamPlayerList';
 import Loader from '@/ui/Loader';
 import { useTeams } from '../hooks/useTeams';
+import { Tabs } from '@/ui/Tabs';
 
 function TeamDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -22,32 +22,53 @@ function TeamDetailPage() {
     return <div>Team not found.</div>;
   }
 
-  return (
-    <div className='grid'>
-      <div className='col-12'>
+  const teamTabs = [
+    {
+      title: 'Starting Players',
+      content: (
         <Card>
           <CardHeader>
-            <TeamStartingHeader team={team} />          
+            <h3>{team.startingPlayers.length} Starting Players</h3>
           </CardHeader>
-          
-            <CardContent className="m-t-4">
-              <TeamPlayerList players={team.startingPlayers} />
-            </CardContent>
-        </Card>
-      </div>
 
-      <div className='col-12'>
+          <CardContent className="m-b-2">
+            <TeamPlayerList players={team.startingPlayers} />
+          </CardContent>
+        </Card>
+      ),
+    },
+    {
+      title: 'Resting Players',
+      content: (
         <Card>
           <CardHeader>
-            <TeamRestingHeader team={team} />
+            <h3>{team.restingPlayers.length} Resting Players</h3>
           </CardHeader>
-          
-            <CardContent className="m-t-4">
-              <TeamPlayerList players={team.restingPlayers} />
-            </CardContent>
+
+          <CardContent className="m-b-2">          
+            <TeamPlayerList players={team.restingPlayers} />
+          </CardContent>
         </Card>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <div className='grid'>
+        <div className='col-12'>
+          <Card>
+            <CardHeader className='m-b-2'>
+              <TeamHeader team={team} />
+            </CardHeader>
+          </Card>
+        </div>
+
+        <div className='col-12'>
+          <Tabs tabs={teamTabs} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

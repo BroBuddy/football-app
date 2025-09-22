@@ -9,6 +9,7 @@ import { usePlayer } from '../hooks/usePlayer';
 import { useSimilarPlayers } from '../hooks/useSimilarPlayers';
 import PlayerSimilars from '../components/PlayerSimilars';
 import PlayerMetrics from '../components/PlayerMetrics';
+import { Tabs } from '@/ui/Tabs';
 
 function PlayerDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +27,31 @@ function PlayerDetailPage() {
   if (!player) {
     return <p>Player not found.</p>;
   }
+
+  const teamTabs = [
+    {
+      title: 'Attributes',
+      content: (
+        <PlayerAttributes player={player} />
+      ),
+    },
+    {
+      title: 'Metrics',
+      content: (
+        <PlayerMetrics metrics={player.metrics} />
+      ),
+    },
+    {
+      title: 'Similar Players',
+      content: (
+        <PlayerSimilars
+          players={similarPlayers} 
+          loading={similarLoading} 
+          error={similarError} 
+      />
+      ),
+    },
+  ];
 
   return (
     <div className='grid'>
@@ -51,19 +77,7 @@ function PlayerDetailPage() {
         </div>
 
         <div className='col-12'>
-          <PlayerAttributes player={player} />
-        </div>
-
-        <div className='col-12'>
-          <PlayerMetrics metrics={player.metrics} />
-        </div>
-        
-        <div className='col-12'>
-            <PlayerSimilars
-              players={similarPlayers} 
-              loading={similarLoading} 
-              error={similarError} 
-          />
+          <Tabs tabs={teamTabs} />
         </div>
     </div>
   );

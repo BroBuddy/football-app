@@ -1,29 +1,18 @@
 import { LeagueDetail } from '../types/League';
-import { CardHeader } from '@/ui/Card';
 import Image from '@/ui/Image';
 import { Users, TrendingUp } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 interface LeagueDetailHeaderProps {
   league: LeagueDetail;
 }
 
 const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
-  const leagueTeams = league.teams;
-  const totalMarketValue = leagueTeams.reduce((sum, team) => sum + team.marketValue, 0);
-
-  const estimatedSimulateTime = () => {
-    const amountTeams = leagueTeams.length;
-    const totalMatches = amountTeams * (amountTeams - 1) * 2;
-    const seconds = Math.round(totalMatches / 10);
-
-    return `up to ${seconds}s`;
-  }
+  const totalMarketValue = league.teams.reduce((sum, team) => sum + team.marketValue, 0);
 
   return (
-    <CardHeader>
+    <>
       <div className="flex items-center justify-between">
         <div className='flex items-center'>
           <Image
@@ -35,9 +24,6 @@ const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
             {league.name}
           </h3>
         </div>
-
-          <Link className='text-white'
-            to={`/simulation/${league.id}`}>Simulate ({estimatedSimulateTime()})</Link>
       </div>
 
       <div className="flex">
@@ -55,7 +41,7 @@ const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
           </span>
         </div>
       </div>
-    </CardHeader>
+    </>
   );
 };
 
