@@ -20,7 +20,6 @@ interface LeagueTeam {
   logoUrl: string;
   marketValue: number;
   playerCount: number;
-  playerAverageAge: number;
 }
 
 export type { LeagueList, LeagueDetail, LeagueTeam }
