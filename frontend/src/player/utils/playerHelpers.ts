@@ -8,6 +8,7 @@ type AttributeSorted = [string, number];
 
 const getStrengthAttributes = (attributes: PlayerAttributes, isGoalkeeper: boolean): FlatAttributes => {
     const relevantAttributes: FlatAttributes = {};
+    
     if (isGoalkeeper) {
         Object.assign(relevantAttributes, attributes.goalkeepingAttributes);
     } else {
@@ -18,34 +19,26 @@ const getStrengthAttributes = (attributes: PlayerAttributes, isGoalkeeper: boole
         Object.assign(relevantAttributes, attributes.movementAttributes);
         Object.assign(relevantAttributes, attributes.defendingAttributes);
     }
+
     return relevantAttributes;
 };
 
-const getWeaknessAttributes = (attributes: PlayerAttributes, isGoalkeeper: boolean): FlatAttributes => {
+const getWeaknessAttributes = (attributes: PlayerAttributes): FlatAttributes => {
     const relevantAttributes: FlatAttributes = {};
-    
-    if (isGoalkeeper) {
-        Object.assign(relevantAttributes, attributes.attackingAttributes);
-        Object.assign(relevantAttributes, attributes.skillAttributes);
-        Object.assign(relevantAttributes, attributes.powerAttributes);
-        Object.assign(relevantAttributes, attributes.mentalityAttributes);
-        Object.assign(relevantAttributes, attributes.movementAttributes);
-        Object.assign(relevantAttributes, attributes.defendingAttributes);
-    } 
-    else {
-        Object.assign(relevantAttributes, attributes.attackingAttributes);
-        Object.assign(relevantAttributes, attributes.skillAttributes);
-        Object.assign(relevantAttributes, attributes.powerAttributes);
-        Object.assign(relevantAttributes, attributes.mentalityAttributes);
-        Object.assign(relevantAttributes, attributes.movementAttributes);
-        Object.assign(relevantAttributes, attributes.defendingAttributes);
-    }
+
+    Object.assign(relevantAttributes, attributes.attackingAttributes);
+    Object.assign(relevantAttributes, attributes.skillAttributes);
+    Object.assign(relevantAttributes, attributes.powerAttributes);
+    Object.assign(relevantAttributes, attributes.mentalityAttributes);
+    Object.assign(relevantAttributes, attributes.movementAttributes);
+    Object.assign(relevantAttributes, attributes.defendingAttributes);
+
     return relevantAttributes;
 };
 
 export const getStrengthsAndWeaknesses = (attributes: PlayerAttributes, isGoalkeeper: boolean) => {
     const strengthAttributes = getStrengthAttributes(attributes, isGoalkeeper);
-    const weaknessAttributes = getWeaknessAttributes(attributes, isGoalkeeper);
+    const weaknessAttributes = getWeaknessAttributes(attributes);
 
     const strengthArray = Object.entries(strengthAttributes) as AttributeSorted[];
     const sortedStrengths = [...strengthArray].sort((a, b) => b[1] - a[1]);
