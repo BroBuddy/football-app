@@ -67,8 +67,8 @@ public class PlayerService {
         Player referencePlayer = getPlayerById(id);
 
         int overallRating = referencePlayer.getOverallRating();
-        int minRating = Math.max(0, overallRating - 5);
-        int maxRating = Math.min(100, overallRating + 5);
+        int minRating = Math.max(0, overallRating - 2);
+        int maxRating = Math.min(100, overallRating + 2);
 
         UUID leagueId = referencePlayer.getTeam().getLeague().getId();
         List<Player> similarPlayers = playerRepository.findTop5ByMainPositionsContainingAndOverallRatingBetweenAndIdIsNotAndTeam_League_Id(
