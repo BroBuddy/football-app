@@ -19,4 +19,25 @@ public record PlayerListDTO(
     public PlayerListDTO(UUID id, String firstName, String lastName, int age, double marketValue, TeamBaseDTO teamDTO, NationDTO nationDTO) {
         this(id, firstName, lastName, age, marketValue, nationDTO, teamDTO, null, null);
     }
+
+    public PlayerListDTO(
+            UUID id,
+            String firstName,
+            String lastName,
+            Integer overallRating,
+            String mainPositions,
+            Double marketValue
+    ) {
+        this(
+                id,
+                firstName,
+                lastName,
+                0,
+                marketValue,
+                null,
+                null,
+                mainPositions,
+                overallRating
+        );
+    }
 }

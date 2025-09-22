@@ -94,6 +94,7 @@ public class PlayerController {
     @GetMapping("/compare")
     public List<PlayerDetailDTO> getPlayersByIds(@RequestParam UUID playerId, @RequestParam UUID compareToPlayerId) {
         return playerService.getPlayersByIds(List.of(playerId, compareToPlayerId)).stream()
+                .sorted(Comparator.comparing(Player::getId))
                 .map(playerMapper::toDetailDTO)
                 .toList();
     }

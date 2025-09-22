@@ -8,4 +8,7 @@ public record NationDTO(
         String code,
         String flagUrl
 ) {
+    public NationDTO(UUID id, String name) {
+        this(id, name, null, null);
+    }
 }
