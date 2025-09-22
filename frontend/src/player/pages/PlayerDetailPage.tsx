@@ -51,11 +51,11 @@ function PlayerDetailPage() {
         </div>
 
         <div className='col-12'>
-          <PlayerMetrics metrics={player.metrics} />
+          <PlayerAttributes player={player} />
         </div>
 
         <div className='col-12'>
-          <PlayerAttributes player={player} />
+          <PlayerMetrics metrics={player.metrics} />
         </div>
         
         <div className='col-12'>

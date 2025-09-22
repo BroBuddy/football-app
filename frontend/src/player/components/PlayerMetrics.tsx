@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@/ui/Card';
+import { Card, CardContent } from '@/ui/Card';
 import { Metrics } from '../types/PlayerMetrics';
 import PlayerMetricsItem from './PlayerMetricsItem';
 
@@ -6,7 +6,7 @@ interface PlayerMetricsProps {
   metrics: Metrics;
 }
 
-export const METRIC_MAX_VALUES = {
+const METRIC_MAX_VALUES = {
   xG: 1.7,
   xA: 1.4,
   xT: 1.0,
@@ -16,11 +16,6 @@ export const METRIC_MAX_VALUES = {
   interceptions: 0.8,
   clearances: 0.9,
   pressureRecovery: 0.9,
-};
-
-const formatMetricName = (name: string): string => {
-  const parts = name.split(/(?=[A-Z])/);
-  return parts.map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
 };
 
 const PlayerMetrics = ({ metrics }: PlayerMetricsProps) => {
@@ -44,7 +39,7 @@ const PlayerMetrics = ({ metrics }: PlayerMetricsProps) => {
       {Object.entries(metricData).map(([key, value]) => (
         <PlayerMetricsItem
           key={key}
-          name={formatMetricName(key)}
+          name={key}
           value={value}
           maxValue={METRIC_MAX_VALUES[key as keyof typeof METRIC_MAX_VALUES]}
         />
@@ -53,31 +48,21 @@ const PlayerMetrics = ({ metrics }: PlayerMetricsProps) => {
   );
 
   return (
-    <div className="grid md:flex">
-      <div className="col-12 md:col-6">
-        <Card className='h-27'>
-          <CardHeader>
+    <Card>
+      <CardContent className='m-b-2'>
+        <div className='grid'>
+          <div className='col-12 md:col-6'>
             <h3>Offensive Metrics</h3>
-          </CardHeader>
-
-          <CardContent>
             {renderMetrics(offensiveMetrics)}
-          </CardContent>
-        </Card>
-      </div>
+          </div>
 
-      <div className="col-12 md:col-6">
-        <Card className='h-27'>
-          <CardHeader>
+          <div className="col-12 md:col-6">
             <h3>Defensive Metrics</h3>
-          </CardHeader>
-
-          <CardContent>
             {renderMetrics(defensiveMetrics)}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

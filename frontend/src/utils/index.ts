@@ -8,6 +8,11 @@ export const getPlayerCountText = (totalElements: number) => {
   }
 };
 
+export const formatKey = (key: string): string => {
+  const spacedKey = key.replace(/([A-Z])/g, ' $1');
+  return spacedKey.charAt(0).toUpperCase() + spacedKey.slice(1);
+};
+
 export const formatMarketValue = (value: number): string => {
     if (value >= 1000) {
         return `€${(value / 1000).toFixed(1)}B`;

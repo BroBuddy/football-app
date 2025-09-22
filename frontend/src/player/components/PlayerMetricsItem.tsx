@@ -1,4 +1,4 @@
-import OverallRating from '@/ui/OverallRating';
+import ScoreCard from '@/ui/ScoreCard';
 import React from 'react';
 
 interface PlayerMetricsItemProps {
@@ -12,13 +12,7 @@ const PlayerMetricsItem: React.FC<PlayerMetricsItemProps> = ({ name, value, maxV
   const rating: number = Math.floor(Math.min(rawRating, 100));
 
   return (
-    <div className="flex items-center bg-grey-900 rounded p-2 m-b-1">
-      <OverallRating rating={rating} />
-
-        <span className="text-sm text-grey-200 m-l-3">
-            {name}
-        </span>
-    </div>
+    <ScoreCard rating={rating} name={name} />
   );
 };
 
