@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader } from '@/ui/Card';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useLeagueDetail } from '../hooks/useLeagueDetail';
 import LeagueTeamItem from '../components/LeagueTeamItem';
 import Loader from '@/ui/Loader';
@@ -22,18 +22,42 @@ const LeagueDetailPage = () => {
         return <p>League not found.</p>;
     }
 
-  return (
-    <Card>
-        <CardHeader className='m-b-2'>
-            <LeagueDetailHeader league={league} />
-        </CardHeader>
 
-        <CardContent className='p-y-4'>
-            {league.teams.map((team: LeagueTeam) => (
-                <LeagueTeamItem key={team.id} team={team} />
-            ))}
-        </CardContent>
-    </Card>
+  const estimatedSimulateTime = () => {
+    const amountTeams = league.teams.length;
+    const totalMatches = amountTeams * (amountTeams - 1) * 2;
+    const seconds = Math.round(totalMatches / 10);
+
+    return `up to ${seconds}s`;
+  }
+
+  return (
+    <div className='grid'>
+      <div className='col-12'>
+        <Card>
+          <CardHeader>
+            <LeagueDetailHeader league={league} />
+          </CardHeader>
+        </Card>
+      </div>
+
+      <div className='col-12'>
+        <Card>
+          <CardHeader className='flex items-center justify-between'>
+            <h3>{league.teams.length} Teams</h3>
+
+            <Link className='text-white'
+              to={`/leagues/${league.id}/simulate`}>Simulate ({estimatedSimulateTime()})</Link>
+          </CardHeader>
+
+          <CardContent className="m-b-2">
+                {league.teams.map((team: LeagueTeam) => (
+                    <LeagueTeamItem key={team.id} team={team} />
+                ))}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 };
 

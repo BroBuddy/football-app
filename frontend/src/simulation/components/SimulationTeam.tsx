@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TableRow } from '../types/TableList';
+import Image from '@/ui/Image';
 
 interface SimulationTeamProps {
   row: TableRow;
@@ -14,7 +15,8 @@ const SimulationTeam: React.FC<SimulationTeamProps> = ({ row }) => {
       className="flex justify-between items-center bg-grey-900 rounded cursor p-2 m-b-1"
     >
       <div className='flex items-center text-sm'>
-        <div className="text-grey-300 p-l-4">{row.rank}</div>
+        <div className="text-white text-bold p-l-4">{row.rank}</div>
+        <Image src={row.logoUrl} alt={row.name} className="w-3 m-l-4" />
         <div className="text-white p-l-4">{row.name}</div>
       </div>
       
@@ -31,7 +33,7 @@ const SimulationTeam: React.FC<SimulationTeamProps> = ({ row }) => {
           {row.diff}
         </div>
 
-        <div className="flex items-center text-left w-4 text-grey-200">
+        <div className="flex items-center text-left w-4 text-white text-bold">
           {row.points}pts
         </div>
       </div>

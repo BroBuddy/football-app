@@ -20,10 +20,10 @@ function App() {
           <Route path="/" element={<OverviewPage />} />
           <Route path="/leagues" element={<LeagueListPage />} />
           <Route path="/leagues/:id" element={<LeagueDetailPage />} />
+          <Route path="/leagues/:id/simulate" element={<SimulationPage />} />
           <Route path="/teams/:id" element={<TeamDetailPage />} />
           <Route path="/players" element={<PlayerListPage />} />
           <Route path="/players/:id" element={<PlayerDetailPage />} />
-          <Route path="/simulation/:id" element={<SimulationPage />} />
           <Route path="/scouting" element={<ScoutingPage />} />
         </Routes>
       </BrowserRouter>

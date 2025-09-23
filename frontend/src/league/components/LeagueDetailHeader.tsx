@@ -10,9 +10,12 @@ interface LeagueDetailHeaderProps {
 }
 
 const LeagueDetailHeader: React.FC<LeagueDetailHeaderProps> = ({ league }) => {
-  const totalMarketValue = league.teams.reduce((sum, team) => sum + team.marketValue, 0);
+  const leagueTeams = league.teams;
+  const totalMarketValue = leagueTeams.reduce((sum, team) => sum + team.marketValue, 0);
+
 
   return (
+
     <>
       <div className="flex items-center justify-between">
         <div className='flex items-center'>

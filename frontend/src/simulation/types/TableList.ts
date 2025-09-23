@@ -6,6 +6,7 @@ export interface TableRow {
   rank: number;
   diff: number;
   id: string;
+  logoUrl: string;
   draw: number;
   goals: string;
   points: number;

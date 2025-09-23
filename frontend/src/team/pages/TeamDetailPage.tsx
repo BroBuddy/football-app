@@ -54,21 +54,19 @@ function TeamDetailPage() {
   ];
 
   return (
-    <>
-      <div className='grid'>
-        <div className='col-12'>
-          <Card>
-            <CardHeader>
-              <TeamHeader team={team} />
-            </CardHeader>
-          </Card>
-        </div>
-
-        <div className='col-12'>
-          <Tabs tabs={teamTabs} />
-        </div>
+    <div className='grid'>
+      <div className='col-12'>
+        <Card>
+          <CardHeader>
+            <TeamHeader team={team} />
+          </CardHeader>
+        </Card>
       </div>
-    </>
+
+      <div className='col-12'>
+        <Tabs tabs={teamTabs} />
+      </div>
+    </div>
   );
 }
 
