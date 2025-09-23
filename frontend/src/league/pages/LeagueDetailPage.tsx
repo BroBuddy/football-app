@@ -23,12 +23,11 @@ const LeagueDetailPage = () => {
     }
 
 
-  const estimatedSimulateTime = () => {
+  const totalGames = () => {
     const amountTeams = league.teams.length;
     const totalMatches = amountTeams * (amountTeams - 1) * 2;
-    const seconds = Math.round(totalMatches / 10);
 
-    return `up to ${seconds}s`;
+    return totalMatches;
   }
 
   return (
@@ -47,7 +46,7 @@ const LeagueDetailPage = () => {
             <h3>{league.teams.length} Teams</h3>
 
             <Link className='text-white'
-              to={`/leagues/${league.id}/simulate`}>Simulate ({estimatedSimulateTime()})</Link>
+              to={`/leagues/${league.id}/simulate`}>Simulate {totalGames()} Games</Link>
           </CardHeader>
 
           <CardContent className="m-b-2">
