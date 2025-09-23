@@ -3,6 +3,7 @@ package com.buddy.football.simulation.service;
 import com.buddy.football.simulation.dto.MatchResultDTO;
 import com.buddy.football.simulation.dto.MatchMapper;
 import com.buddy.football.simulation.dto.MatchTeamDTO;
+import com.buddy.football.team.entity.Team;
 import com.buddy.football.team.service.TeamService;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,17 @@ public class MatchSimulationService {
     }
 
     public MatchResultDTO simulateMatch(UUID homeId, UUID awayId) {
-        MatchTeamDTO matchup = teamService.getMatchupTeams(homeId, awayId)
-                .orElseThrow(() -> new IllegalArgumentException("One or both teams not found."));
+        Team homeTeam = teamService.getTeamWithAllDetails(homeId)
+                .orElseThrow(() -> new IllegalArgumentException("Home team not found"));
+        Team awayTeam = teamService.getTeamWithAllDetails(awayId)
+                .orElseThrow(() -> new IllegalArgumentException("Away team not found"));
 
-        return new MatchResultDTO(
-                matchup.home().name(),
-                0,
-                matchup.away().name(),
-                0
+        MatchTeamDTO match = new MatchTeamDTO(
+                matchMapper.toLineupDTO(homeTeam),
+                matchMapper.toLineupDTO(awayTeam)
         );
+
+        return MatchService.simulateMatch(match);
     }
 }
+

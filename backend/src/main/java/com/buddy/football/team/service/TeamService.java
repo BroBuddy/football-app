@@ -48,14 +48,19 @@ public class TeamService {
         }
     }
 
+    public List<TeamListDTO> getTeamsByLeagueId(UUID leagueId) {
+        return teamRepository.findTeamsByLeagueId(leagueId);
+    }
+
     @Transactional
     public Optional<TeamDetailDTO> getTeamDetails(UUID teamId) {
         return teamRepository.findById(teamId)
                 .map(teamMapper::toDetailDTO);
     }
 
-    public List<TeamListDTO> getTeamsByLeagueId(UUID leagueId) {
-        return teamRepository.findTeamsByLeagueId(leagueId);
+    @Transactional
+    public Optional<Team> getTeamWithAllDetails(UUID teamId) {
+        return teamRepository.findById(teamId);
     }
 
     @Transactional

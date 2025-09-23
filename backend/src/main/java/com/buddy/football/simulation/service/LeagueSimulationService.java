@@ -24,7 +24,7 @@ public class LeagueSimulationService {
         AtomicInteger rank = new AtomicInteger(1);
 
         Map<UUID, TeamResult> statsMap = teams.stream()
-                .collect(Collectors.toMap(TeamListDTO::id, t -> new TeamResult(t.id(), t.name())));
+                .collect(Collectors.toMap(TeamListDTO::id, t -> new TeamResult(t.id(), t.name(), t.logoUrl())));
 
         List<MatchResultTuple> matchResults = generateMatchResults(teams);
 
@@ -102,6 +102,7 @@ public class LeagueSimulationService {
                     Map<String, Object> map = new HashMap<>();
                     map.put("rank", rank.getAndIncrement());
                     map.put("id", ts.getId());
+                    map.put("logoUrl", ts.getLogoUrl());
                     map.put("name", ts.getName());
                     map.put("games", ts.getGames());
                     map.put("won", ts.getWon());

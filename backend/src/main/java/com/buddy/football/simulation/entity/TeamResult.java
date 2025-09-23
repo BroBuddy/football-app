@@ -8,6 +8,7 @@ import java.util.UUID;
 public class TeamResult {
     public UUID id;
     public String name;
+    public String logoUrl;
     public int games = 0;
     public int won = 0;
     public int draw = 0;
@@ -16,9 +17,10 @@ public class TeamResult {
     public int goalsAgainst = 0;
     public int points = 0;
 
-    public TeamResult(UUID id, String name) {
+    public TeamResult(UUID id, String name, String logoUrl) {
         this.id = id;
         this.name = name;
+        this.logoUrl = logoUrl;
     }
 
     public int getDiff() {
