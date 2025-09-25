@@ -7,7 +7,7 @@ interface BadgeProps {
 
 const Badge: React.FC<BadgeProps> = ({ className, children }) => {
   return (
-    <div className={`badge rounded text-sm ${className || ''}`}>
+    <div className={`flex items-center badge rounded text-sm ${className || ''}`}>
       {children}
     </div>
   );

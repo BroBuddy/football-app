@@ -2,16 +2,20 @@ import { Link } from 'react-router-dom';
 import { CardHeader } from '@/ui/Card';
 import Image from '@/ui/Image';
 import OverallRating from '@/ui/OverallRating';
-import { Calendar, MapPin, PersonStanding } from 'lucide-react';
+import { Calendar, PersonStanding } from 'lucide-react';
 import { formatMarketValue } from '@/utils';
 import React from 'react';
 import { Player } from '../types/Player';
+import PlayerType from './PlayerType';
+import Badge from '@/ui/Badge';
 
 interface PlayerHeaderProps {
   player: Player;
 }
 
 const PlayerHeader: React.FC<PlayerHeaderProps> = ({ player }) => {
+  const isGoalkeeper = player.mainPositions === 'gk';
+
   return (
     <CardHeader>
       <div className="flex items-center justify-between">
@@ -44,34 +48,23 @@ const PlayerHeader: React.FC<PlayerHeaderProps> = ({ player }) => {
         </div>
       </div>
 
-      <div className="flex">
-        <div className="flex items-center p-r-4 text-grey-200">
+      <div className="flex gap-3">
+        <Badge>
           <Calendar size={15} className="m-r-1" />
-          <span className='text-sm'>
-            {player.age}y.o.
-          </span>
-        </div>
+          {player.age}y.o.
+        </Badge>
 
-        <div className="flex items-center p-r-4 text-grey-200">
+        <Badge>
           <PersonStanding size={15} className="m-r-1" />
-          <span className='text-sm'>
-            {player.height}cm, {' '}
-            {player.weight}kg
-          </span>
-        </div>
+          {player.height}cm, {' '}
+          {player.weight}kg
+        </Badge>
 
-        <div className="flex items-center p-r-4 text-grey-200">
-          <span className="text-sm">
-            {formatMarketValue(player.marketValue)}
-          </span>
-        </div>
+        <Badge>
+          {formatMarketValue(player.marketValue)}
+        </Badge>
 
-        <div className="flex items-center text-left w-10 text-grey-200">
-            <MapPin size={15} className="m-r-1" />
-            <span className='text-sm'>
-                {player.mainPositions.toLocaleUpperCase()}
-            </span>
-        </div>
+        {!isGoalkeeper && <PlayerType mainAttributes={player.mainAttributes} />}
       </div>
     </CardHeader>
   );

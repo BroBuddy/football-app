@@ -71,7 +71,6 @@ function PlayerDetailPage() {
                           <PlayerPositions positions={player.positions} />
                       </div>
                   </div>
-
               </CardContent>
           </Card>
         </div>
