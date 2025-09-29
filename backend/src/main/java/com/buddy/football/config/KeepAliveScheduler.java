@@ -4,12 +4,10 @@ import com.buddy.football.nation.dto.NationDTO;
 import com.buddy.football.nation.service.NationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("prod")
 public class KeepAliveScheduler {
 
     private static final Logger log = LoggerFactory.getLogger(KeepAliveScheduler.class);
@@ -20,7 +18,7 @@ public class KeepAliveScheduler {
         this.nationService = nationService;
     }
 
-    @Scheduled(fixedRate = 600_000)
+    @Scheduled(fixedRate = 300_000)
     public void pingNations() throws InterruptedException {
         for (int i = 0; i < 3; i++) {
             try {
@@ -31,12 +29,13 @@ public class KeepAliveScheduler {
 
                 break;
             } catch (Exception e) {
-                if (i == 2) {
-                    log.error("Alle Versuche fehlgeschlagen", e);
-                } else {
-                    Thread.sleep(2000);
-                }
+                if (i == 2) log.error("Alle Versuche fehlgeschlagen", e);
+                else sleep(2000);
             }
         }
+    }
+
+    protected void sleep(long millis) throws InterruptedException {
+        Thread.sleep(millis);
     }
 }
