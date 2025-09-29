@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,28 +16,30 @@ import static org.junit.jupiter.api.Assertions.*;
 class TeamDataTest {
 
     private LeagueRepository leagueRepository;
+    private TeamData teamData;
 
     @BeforeEach
     void setUp() {
         leagueRepository = Mockito.mock(LeagueRepository.class);
 
         Mockito.when(leagueRepository.findByName("Bundesliga"))
-                .thenReturn(Optional.of(new League("Bundesliga", null, List.of(), null, null)));
+                .thenReturn(Optional.of(new League("Bundesliga", null, List.of(), LocalDateTime.now(), LocalDateTime.now())));
         Mockito.when(leagueRepository.findByName("Premier League"))
-                .thenReturn(Optional.of(new League("Premier League", null, List.of(), null, null)));
+                .thenReturn(Optional.of(new League("Premier League", null, List.of(), LocalDateTime.now(), LocalDateTime.now())));
         Mockito.when(leagueRepository.findByName("La Liga"))
-                .thenReturn(Optional.of(new League("La Liga", null, List.of(), null, null)));
+                .thenReturn(Optional.of(new League("La Liga", null, List.of(), LocalDateTime.now(), LocalDateTime.now())));
         Mockito.when(leagueRepository.findByName("Serie A"))
-                .thenReturn(Optional.of(new League("Serie A", null, List.of(), null, null)));
+                .thenReturn(Optional.of(new League("Serie A", null, List.of(), LocalDateTime.now(), LocalDateTime.now())));
         Mockito.when(leagueRepository.findByName("Ligue 1"))
-                .thenReturn(Optional.of(new League("Ligue 1", null, List.of(), null, null)));
+                .thenReturn(Optional.of(new League("Ligue 1", null, List.of(), LocalDateTime.now(), LocalDateTime.now())));
 
-        new TeamData(leagueRepository);
+        teamData = new TeamData(leagueRepository);
     }
 
     @Test
     void testGetAllTeams() {
-        List<Team> teams = TeamData.get();
+        List<Team> teams = teamData.get();
+
         assertNotNull(teams);
         assertFalse(teams.isEmpty());
 
@@ -53,8 +56,9 @@ class TeamDataTest {
         LeagueRepository mockRepo = Mockito.mock(LeagueRepository.class);
         Mockito.when(mockRepo.findByName("Bundesliga")).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> new TeamData(mockRepo));
+        TeamData brokenData = new TeamData(mockRepo);
 
-        assertTrue(ex.getMessage().contains("League not found"));
+        RuntimeException ex = assertThrows(RuntimeException.class, brokenData::get);
+        assertTrue(ex.getMessage().contains("League nicht gefunden"));
     }
 }

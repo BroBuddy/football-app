@@ -14,15 +14,17 @@ import java.util.List;
 public class LeagueInitializer implements CommandLineRunner {
 
     private final LeagueRepository leagueRepository;
+    private final LeagueData leagueData;
 
-    public LeagueInitializer(LeagueRepository leagueRepository) {
+    public LeagueInitializer(LeagueRepository leagueRepository, LeagueData leagueData) {
         this.leagueRepository = leagueRepository;
+        this.leagueData = leagueData;
     }
 
     @Override
     public void run(String... args) {
         if (leagueRepository.count() == 0) {
-            List<League> leagues = LeagueData.get();
+            List<League> leagues = leagueData.get();
             leagueRepository.saveAll(leagues);
             System.out.println("✅ Leagues initialized: " + leagues.size());
         } else {

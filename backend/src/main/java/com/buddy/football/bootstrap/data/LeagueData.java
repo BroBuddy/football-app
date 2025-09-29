@@ -11,13 +11,13 @@ import java.util.List;
 @Component
 public class LeagueData {
 
-    private static NationRepository nationRepository = null;
+    private final NationRepository nationRepository;
 
     public LeagueData(NationRepository nationRepository) {
-        LeagueData.nationRepository = nationRepository;
+        this.nationRepository = nationRepository;
     }
 
-    public static List<League> get() {
+    public List<League> get() {
         LocalDateTime now = LocalDateTime.now();
 
         return getData().stream()
@@ -39,10 +39,10 @@ public class LeagueData {
                 .toList();
     }
 
-    private static List<Object[]> getData() {
+    private List<Object[]> getData() {
         return List.of(
                 new Object[]{"Bundesliga", "DEU"},
-                new Object[]{"La Liga", "ESP",},
+                new Object[]{"La Liga", "ESP"},
                 new Object[]{"Serie A", "ITA"},
                 new Object[]{"Premier League", "ENG"},
                 new Object[]{"Ligue 1", "FRA"}

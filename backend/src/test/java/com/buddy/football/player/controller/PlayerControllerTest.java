@@ -125,18 +125,34 @@ class PlayerControllerTest {
 
     @Test
     void getSimilarPlayers_shouldReturnSimilarPlayers() throws Exception {
-        UUID id = UUID.randomUUID();
-        Player player = new Player();
-        PlayerDetailDTO playerDTO = new PlayerDetailDTO(id, "Similar", "Player", null, 0, 0, 0.0, null, null, false, null, null, null, null, null, null);
-        List<Player> similarPlayers = List.of(player);
+        UUID queryId = UUID.randomUUID();
+        UUID playerId1 = UUID.randomUUID();
+        UUID playerId2 = UUID.randomUUID();
 
-        when(playerService.getSimilarPlayers(id)).thenReturn(similarPlayers);
-        when(playerMapper.toDetailDTO(any(Player.class))).thenReturn(playerDTO);
+        Player player1 = new Player();
+        player1.setId(playerId1);
+        Player player2 = new Player();
+        player2.setId(playerId2);
 
-        mockMvc.perform(get("/api/players/{id}/similar", id)
+        List<Player> similarPlayers = List.of(player1, player2);
+
+        TeamBaseDTO teamDTO = new TeamBaseDTO(UUID.randomUUID(), "Mock Team", "MT");
+        NationDTO nationDTO = new NationDTO(UUID.randomUUID(), "Mock Nation");
+
+        PlayerListDTO listDto1 = new PlayerListDTO(playerId1, "Similar1", "Player", 28, 10.0, teamDTO, nationDTO);
+        PlayerListDTO listDto2 = new PlayerListDTO(playerId2, "Similar2", "Player", 30, 8.0, teamDTO, nationDTO);
+
+        when(playerService.getSimilarPlayers(queryId)).thenReturn(similarPlayers);
+
+        when(playerMapper.toListDTO(any(Player.class)))
+                .thenReturn(listDto1) // Erster Aufruf
+                .thenReturn(listDto2); // Zweiter Aufruf
+
+        mockMvc.perform(get("/api/players/{id}/similar", queryId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].firstName").value("Similar"));
+                .andExpect(jsonPath("$[0].firstName").value("Similar1"))
+                .andExpect(jsonPath("$[1].firstName").value("Similar2"));
     }
 
     @Test

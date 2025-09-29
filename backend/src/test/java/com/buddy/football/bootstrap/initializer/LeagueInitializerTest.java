@@ -1,5 +1,7 @@
 package com.buddy.football.bootstrap.initializer;
 
+import com.buddy.football.bootstrap.data.LeagueData;
+import com.buddy.football.league.entity.League;
 import com.buddy.football.league.repository.LeagueRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,17 +14,20 @@ import static org.mockito.Mockito.*;
 class LeagueInitializerTest {
 
     private LeagueRepository leagueRepository;
+    private LeagueData leagueData;
     private LeagueInitializer leagueInitializer;
 
     @BeforeEach
     void setup() {
         leagueRepository = Mockito.mock(LeagueRepository.class);
-        leagueInitializer = new LeagueInitializer(leagueRepository);
+        leagueData = Mockito.mock(LeagueData.class);
+        leagueInitializer = new LeagueInitializer(leagueRepository, leagueData);
     }
 
     @Test
     void testRun_initializesLeaguesWhenEmpty() throws Exception {
         when(leagueRepository.count()).thenReturn(0L);
+        when(leagueData.get()).thenReturn(List.of(new League()));
 
         leagueInitializer.run();
 

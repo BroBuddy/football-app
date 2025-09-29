@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LeagueDataTest {
 
     private NationRepository nationRepository;
+    private LeagueData leagueData;
 
     @BeforeEach
     void setUp() {
@@ -26,14 +27,13 @@ class LeagueDataTest {
         Mockito.when(nationRepository.findByCode("ENG")).thenReturn(Optional.of(new Nation("England", "ENG")));
         Mockito.when(nationRepository.findByCode("FRA")).thenReturn(Optional.of(new Nation("France", "FRA")));
 
-        new LeagueData(nationRepository);
+        leagueData = new LeagueData(nationRepository);
     }
 
     @Test
     void testGetLeagues() {
-        List<League> leagues = LeagueData.get();
+        List<League> leagues = leagueData.get();
         assertEquals(5, leagues.size());
-
         assertEquals("Bundesliga", leagues.get(0).getName());
         assertEquals("DEU", leagues.get(0).getNation().getCode());
     }
@@ -42,9 +42,9 @@ class LeagueDataTest {
     void testNationNotFoundThrows() {
         NationRepository mockRepo = Mockito.mock(NationRepository.class);
         Mockito.when(mockRepo.findByCode("DEU")).thenReturn(Optional.empty());
-        new LeagueData(mockRepo);
+        LeagueData ld = new LeagueData(mockRepo);
 
-        RuntimeException ex = assertThrows(RuntimeException.class, LeagueData::get);
+        RuntimeException ex = assertThrows(RuntimeException.class, ld::get);
         assertTrue(ex.getMessage().contains("Nation nicht gefunden"));
     }
 }

@@ -1,26 +1,22 @@
 package com.buddy.football.bootstrap.data;
 
-import com.buddy.football.league.entity.League;
 import com.buddy.football.league.repository.LeagueRepository;
 import com.buddy.football.team.entity.Team;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class TeamData {
 
-    private static LeagueRepository leagueRepository = null;
+    private final LeagueRepository leagueRepository;
 
     public TeamData(LeagueRepository leagueRepository) {
-        TeamData.leagueRepository = leagueRepository;
-        Optional<League> leagueOptional = leagueRepository.findByName("Bundesliga");
-        League league = leagueOptional.orElseThrow(() -> new RuntimeException("League not found."));
+        this.leagueRepository = leagueRepository;
     }
 
-    public static List<Team> get() {
+    public List<Team> get() {
         LocalDateTime now = LocalDateTime.now();
 
         return List.of(
@@ -37,10 +33,10 @@ public class TeamData {
                     String leagueName = data[2];
                     String nationCode = data[3];
 
-                    League league = leagueRepository.findByName(leagueName)
+                    var league = leagueRepository.findByName(leagueName)
                             .orElseThrow(() -> new RuntimeException("League nicht gefunden: " + leagueName));
 
-                    Team team = new Team(
+                    return new Team(
                             teamName,
                             "https://football-logos.cc/logos/" + nationCode + "/256x256/" + logoCode + ".png",
                             0.0,
@@ -49,8 +45,6 @@ public class TeamData {
                             now,
                             now
                     );
-
-                    return team;
                 })
                 .toList();
     }

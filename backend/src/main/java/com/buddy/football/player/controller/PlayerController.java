@@ -72,11 +72,11 @@ public class PlayerController {
     }
 
     @GetMapping("/{id}/similar")
-    public ResponseEntity<List<PlayerDetailDTO>> getSimilarPlayers(@PathVariable UUID id) {
+    public ResponseEntity<List<PlayerListDTO>> getSimilarPlayers(@PathVariable UUID id) {
         List<Player> similarPlayers = playerService.getSimilarPlayers(id);
 
-        List<PlayerDetailDTO> similarPlayersDTOs = similarPlayers.stream()
-                .map(playerMapper::toDetailDTO)
+        List<PlayerListDTO> similarPlayersDTOs = similarPlayers.stream()
+                .map(playerMapper::toListDTO)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(similarPlayersDTOs);

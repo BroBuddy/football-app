@@ -14,15 +14,17 @@ import java.util.List;
 public class TeamInitializer implements CommandLineRunner {
 
     private final TeamRepository teamRepository;
+    private final TeamData teamData;
 
-    public TeamInitializer(TeamRepository teamRepository) {
+    public TeamInitializer(TeamRepository teamRepository, TeamData teamData) {
         this.teamRepository = teamRepository;
+        this.teamData = teamData;
     }
 
     @Override
     public void run(String... args) {
         if (teamRepository.count() == 0) {
-            List<Team> teams = TeamData.get();
+            List<Team> teams = teamData.get();
             teamRepository.saveAll(teams);
             System.out.println("✅ Teams initialized: " + teams.size());
         } else {
